@@ -6,6 +6,10 @@ class Bundle(models.Model):
     _name = "hc.res.bundle"    
     _description = "Bundle"        
 
+    identifier_id = fields.Many2one(
+        comodel_name="hc.bundle.identifier", 
+        string="Identifier", 
+        help="Persistent identifier for the bundle.")
     type = fields.Selection(
         string="Bundle Type", 
         required="True", 
@@ -156,7 +160,7 @@ class BundleEntryResponse(models.Model):
     status = fields.Char(
         string="Status", 
         required="True", 
-        help="Status return code for entry.")                
+        help="Status response code (text optional).")                
     location = fields.Char(
         string="Location URI", 
         help="URL of the location, if the operation returns a location.")                
@@ -165,14 +169,29 @@ class BundleEntryResponse(models.Model):
         help="The eTag for the resource (if relevant).")                
     last_modified = fields.Datetime(
         string="Last Modified Date", 
-        help="Server's date time modified.")                
+        help="Server's date time modified.")
+    outcome_id = fields.Many2one(
+        comodel_name="hc.bundle.response.outcome", 
+        string="Outcome", 
+        help="OperationOutcome with hints and warnings (for batch/transaction).")
+                
+class BundleIdentifier(models.Model):
+    _name = "hc.bundle.identifier"
+    _description = "Bundle Identifier"
+    _inherit = ["hc.basic.association", "hc.identifier"]
 
 class BundleSignature(models.Model):    
-    _name = "hc.bundle.signature"    
-    _description = "Bundle Signature"        
+    _name = "hc.bundle.signature"
+    _description = "Bundle Signature"
     _inherit = ["hc.basic.association", "hc.signature"]
 
 class BundleEntryResource(models.Model):    
     _name = "hc.bundle.entry.resource"    
     _description = "Bundle Entry Resource"        
     _inherit = ["hc.basic.association", "hc.resource"]
+
+class BundleResponseOutcome(models.Model):
+    _name = "hc.bundle.response.outcome"
+    _description = "Bundle Response Outcome"
+    _inherit = ["hc.basic.association", "hc.resource"]
+

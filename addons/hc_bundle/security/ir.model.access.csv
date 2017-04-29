@@ -5,5 +5,8 @@ access_hc_bundle_hc_bundle_entry_user,hc.bundle.hc.bundle.entry.user,model_hc_bu
 access_hc_bundle_hc_bundle_entry_search_user,hc.bundle.hc.bundle.entry.search.user,model_hc_bundle_entry_search,hc_base.group_hc_base_user,1,0,0,0
 access_hc_bundle_hc_bundle_entry_request_user,hc.bundle.hc.bundle.entry.request.user,model_hc_bundle_entry_request,hc_base.group_hc_base_user,1,0,0,0
 access_hc_bundle_hc_bundle_entry_response_user,hc.bundle.hc.bundle.entry.response.user,model_hc_bundle_entry_response,hc_base.group_hc_base_user,1,0,0,0
+access_hc_bundle_hc_bundle_identifier_user,hc.bundle.hc.bundle.identifier.user,model_hc_bundle_identifier,hc_base.group_hc_base_user,1,0,0,0
 access_hc_bundle_hc_bundle_signature_user,hc.bundle.hc.bundle.signature.user,model_hc_bundle_signature,hc_base.group_hc_base_user,1,0,0,0
 access_hc_bundle_hc_bundle_entry_resource_user,hc.bundle.hc.bundle.entry.resource.user,model_hc_bundle_entry_resource,hc_base.group_hc_base_user,1,0,0,0
+access_hc_bundle_hc_bundle_response_outcome_user,hc.bundle.hc.bundle.response.outcome.user,model_hc_bundle_response_outcome,hc_base.group_hc_base_user,1,0,0,0
+

@@ -481,9 +481,9 @@ class CarePlanAuthor(models.Model):
             ("organization", "Organization"), 
             ("care_team", "Care Team")], 
         help="Type of who is responsible for contents of the plan.")
-    action_resulting_name = fields.Char(
-        string="Action Resulting", 
-        compute="_compute_action_resulting_name", 
+    author_name = fields.Char(
+        string="Author", 
+        compute="_compute_author_name", 
         store="True", 
         help="Who is responsible for contents of the plan.")
     author_patient_id = fields.Many2one(

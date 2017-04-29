@@ -94,7 +94,7 @@ class DiagnosticReport(models.Model):
         string="Effective Type", 
         required="True", 
         selection=[
-            ("date_time", "Datetime"), 
+            ("date_time", "Date Time"), 
             ("period", "Period")], 
         help="Type of plan or agreement issuer.")                
     effective_name = fields.Char(
@@ -103,8 +103,7 @@ class DiagnosticReport(models.Model):
         required="True", 
         help="Clinically Relevant time/time-period for report.")                
     effective_date_time = fields.Datetime(
-        string="Effective Datetime", 
-        required="True", 
+        string="Effective Date Time", 
         help="DateTime clinically relevant time/time-period for report.")                
     effective_start_date = fields.Datetime(
         string="Effective Start Date", 
