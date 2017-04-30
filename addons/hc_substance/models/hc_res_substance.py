@@ -160,7 +160,6 @@ class SubstanceCategory(models.Model):
     snomed_definition = fields.Char(
         string="SNOMED Definition", 
         help="SNOMED fully-specified name of this substance category.")
-
     contains_id = fields.Many2one(
         comodel_name="hc.vs.substance.category", 
         string="Parent", 
