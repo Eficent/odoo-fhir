@@ -12,7 +12,7 @@
                     limit=""/>
 
         <menuitem id="hc_activity_definition.menu_act_defn" 
-                  name="Activity Definitions" 
+                  name="Activity Definitions"
                   parent="hc_base.menu_clin_rsn" 
                   action="hc_res_activity_definition_action"
                   groups="hc_base.group_hc_base_manager" 
