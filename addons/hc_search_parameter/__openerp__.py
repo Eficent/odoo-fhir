@@ -3,14 +3,22 @@
     'name': "Search Parameter",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Search or Filter Item
+        """,
 
     'description': """
-        Long description of module's purpose
+        A search parameter that defines a named search item that can be used to search/filter on a resource. 
+
+    **Scope and Usage**
+
+    A SearchParameter resource specifies a search parameter that may be used on the RESTful API to search or filter on a resource. The SearchParameter resource declares: 
+    
+    * how to refer to the search parameter from a client
+    * how the search parameter is to be understood by the server
+    * where in the source resource the parameter matches
     """,
 
-    'author': "My Company",
+    'author': "Luigi Sison",
     'website': "https://hl7-fhir.github.io/searchparameter.html",
 
     # Categories can be used to filter modules in modules listing
