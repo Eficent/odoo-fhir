@@ -61,6 +61,7 @@
                                        attrs="{'invisible': [('is_deceased','=',False)]}"/>                 
                             </group>                    
                             <group>                   
+                                <field name="marital_status_id" attrs="{'invisible': [('type','!=','human')]}"/>
                                 <field name="race_ids" widget="many2many_tags" attrs="{'invisible': [('type','!=','human')]}"/>             
                                 <field name="ethnicity_ids" widget="many2many_tags" attrs="{'invisible': [('type','!=','human')]}"/>
                                 <field name="animal_species_id" attrs="{'invisible': [('type','!=','animal')], 'required': [('type','=','animal')]}"/>
@@ -227,9 +228,9 @@
                                     </form>
                                 </field>
                             </page>
-                            <page string="Links" attrs="{'invisible': [('type','=','animal')]}"/>
-                            <!-- <page string="Links">
-                                 <field name="links_ids" mode="tree">
+                            <!-- <page string="Links" attrs="{'invisible': [('type','=','animal')]}"/> -->
+                            <page string="Links" attrs="{'invisible': [('type','=','animal')]}">
+                                 <field name="link_ids" mode="tree">
                                     <tree>
                                         <field name="other_name"/>
                                         <field name="other_type"/>
@@ -250,7 +251,7 @@
                                         </sheet>
                                     </form>
                                 </field>
-                            </page> -->
+                            </page>
                             <!-- <page string="Contacts"/> -->
                             <page string="Contacts">
                                 <field name="contact_ids" mode="tree">
@@ -277,37 +278,10 @@
                                                     <field name="organization_id"/>
                                                 </group>
                                             </group>
-                                            <notebook>
-                                                <page string="Telecom">                    
-                                                    <field name="telecom_ids" mode="tree">
-                                                        <tree>
-                                                            <field name="is_preferred" widget="upgrade_boolean"/>
-                                                            <field name="telecom_id"/>
-                                                            <field name="use"/>
-                                                        </tree>
-                                                        <form>
-                                                            <sheet>
-                                                                <group>
-                                                                    <group>
-                                                                        <field name="telecom_id"/>
-                                                                        <field name="use"/>
-                                                                    </group>
-                                                                    <group>
-                                                                        <field name="is_preferred"/>
-                                                                        <field name="is_active"/>
-                                                                        <field name="start_date" placeholder="Valid From"/>
-                                                                        <field name="end_date" placeholder="Valid To"/>
-                                                                    </group>
-                                                                </group>
-                                                            </sheet>
-                                                        </form>
-                                                    </field>               
-                                                </page>    
-                                            </notebook>
                                         </sheet>
                                     </form>
                                 </field>
-                            </page>                   
+                            </page>                       
                             <page string="Languages" attrs="{'invisible': [('type','=','animal')]}">
                                 <field name="communication_ids" mode="tree">
                                     <tree>
@@ -333,7 +307,7 @@
                                                 <group>
                                                 </group>
                                             </group>
-                                            <notebook colspan="4">                      
+                                            <notebook>                     
                                                 <page string="Proficiency">                    
                                                     <field name="proficiency_ids" mode="tree">              
                                                         <tree>            
@@ -360,41 +334,41 @@
                                                         </form>         
                                                     </field>                
                                                 </page>
-                                                <page string="Marital History" attrs="{'invisible': [('type','=','animal')]}"/>
-                                                <!-- page string="Marital History">
-                                                    <field name="marital_history_ids" mode="tree">
-                                                        <tree>
-                                                            <field name="marital_status_id"/>
-                                                            <field name="partner_id"/>
-                                                            <field name="start_date"/>
-                                                            <field name="end_date"/>
-                                                        </tree> 
-                                                        <form>
-                                                            <sheet>
-                                                                <group>
-                                                                    <group>
-                                                                        <field name="marital_status_id"/>
-                                                                        <field name="start_date" placeholder="Valid From"/>
-                                                                        <field name="end_date" placeholder="Valid To"/>
-                                                                    </group>
-                                                                    <group>
-                                                                        <field name="partner_id"/>
-                                                                    </group>
-                                                                </group>
-                                                            </sheet>
-                                                        </form>
-                                                    </field>
-                                                </page> -->                 
                                             </notebook>
                                         </sheet>
                                     </form>
                                 </field>
-                            </page>                   
-                        </notebook>                     
-                    </sheet>                            
-                </form>                             
-            </field>                                    
-        </record>                                       
+                            </page>
+                            <!-- <page string="Marital History" attrs="{'invisible': [('type','=','animal')]}"/> -->
+                            <page string="Marital History" attrs="{'invisible': [('type','=','animal')]}">
+                                <field name="marital_history_ids" mode="tree">
+                                    <tree>
+                                        <field name="marital_status_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                    </tree> 
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="marital_status_id"/>
+                                                    <field name="start_date" placeholder="Valid From"/>
+                                                    <field name="end_date" placeholder="Valid To"/>
+                                                </group>
+                                                <group>
+                                                    <field name="partner_id"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>     
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>                                     
                       
                                 
         <!-- Patient Action and Menu -->                        
