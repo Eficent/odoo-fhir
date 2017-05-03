@@ -99,6 +99,11 @@ access_hc_base_hc_data_reqt_code_filter_user,hc.base.hc.data.reqt.code.filter.us
 access_hc_base_hc_data_reqt_data_filter_user,hc.base.hc.data.reqt.data.filter.user,model_hc_data_reqt_data_filter,hc_base.group_hc_base_user,1,0,0,0
 access_hc_base_hc_data_reqt_profile_user,hc.base.hc.data.reqt.profile.user,model_hc_data_reqt_profile,hc_base.group_hc_base_user,1,0,0,0
 access_hc_base_hc_data_reqt_must_support_user,hc.base.hc.data.reqt.must.support.user,model_hc_data_reqt_must_support,hc_base.group_hc_base_user,1,0,0,0
+access_hc_base_hc_domain_resource_manager,hc.base.hc.domain.resource.manager,model_hc_domain_resource,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_domain_resource_text_manager,hc.base.hc.domain.resource.text.manager,model_hc_domain_resource_text,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_domain_resource_contained_manager,hc.base.hc.domain.resource.contained.manager,model_hc_domain_resource_contained,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_domain_resource_extension_manager,hc.base.hc.domain.resource.extension.manager,model_hc_domain_resource_extension,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_domain_resource_modifier_extension_manager,hc.base.hc.domain.resource.modifier.extension.manager,model_hc_domain_resource_modifier_extension,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_vs_value_code_manager,hc.base.hc.vs.value.code.manager,model_hc_vs_value_code,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_vs_value_code_concept_manager,hc.base.hc.vs.value.code.concept.manager,model_hc_vs_value_code_concept,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_vs_value_coding_manager,hc.base.hc.vs.value.coding.manager,model_hc_vs_value_coding,hc_base.group_hc_base_manager,1,1,1,1
@@ -150,6 +155,8 @@ access_hc_base_hc_vs_time_uom_manager,hc.base.hc.vs.time.uom.manager,model_hc_vs
 access_hc_base_hc_vs_designation_use_manager,hc.base.hc.vs.designation.use.manager,model_hc_vs_designation_use,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_address_use_manager,hc.base.hc.address.use.manager,model_hc_address_use,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_vs_defined_type_manager,hc.base.hc.vs.defined.type.manager,model_hc_vs_defined_type,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_element_manager,hc.base.hc.element.manager,model_hc_element,hc_base.group_hc_base_manager,1,1,1,1
+access_hc_base_hc_element_extension_manager,hc.base.hc.element.extension.manager,model_hc_element_extension,hc_base.group_hc_base_manager,1,1,1,1
 access_hc_base_hc_element_definition_user,hc.base.hc.element.definition.user,model_hc_element_definition,hc_base.group_hc_base_user,1,0,0,0
 access_hc_base_hc_element_definition_slicing_user,hc.base.hc.element.definition.slicing.user,model_hc_element_definition_slicing,hc_base.group_hc_base_user,1,0,0,0
 access_hc_base_hc_element_definition_base_user,hc.base.hc.element.definition.base.user,model_hc_element_definition_base,hc_base.group_hc_base_user,1,0,0,0

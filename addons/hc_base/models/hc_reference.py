@@ -4,7 +4,7 @@ from openerp import models, fields, api
 
 class Reference(models.Model):    
     _name = "hc.reference"    
-    _description = "Reference"            
+    _description = "Reference"         
 
     reference = fields.Char(
         string="Reference", 
