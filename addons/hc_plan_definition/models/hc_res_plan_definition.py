@@ -210,8 +210,9 @@ class PlanDefinitionGoalDefinitionTarget(models.Model):
         string="Due", 
         help="Indicates the timeframe after the start of the goal in which the goal should be met.")
     due_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string=" UOM", 
+        comodel_name="product.uom", 
+        string="UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         help="Due unit of measure.")
 
 class PlanDefinitionActionDefinition(models.Model):    
@@ -300,8 +301,9 @@ class PlanDefinitionActionDefinition(models.Model):
         string="Timing Duration", 
         help="Duration when the action should take place.")
     timing_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Timing Duration UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         help="Timing Duration unit of measure.")
     timing_range_low = fields.Float(
         string="Timing Range Low", 
@@ -477,8 +479,9 @@ class PlanDefinitionActionDefinitionRelatedAction(models.Model):
         string="Offset Duration", 
         help="Duration time offset for the relationship.")
     offset_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Offset Duration UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         help="Offset Duration unit of measure.")
     offset_range_low = fields.Float(
         string="Offset Range Low", 

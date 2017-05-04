@@ -395,3 +395,20 @@ sudo touch /odoo/odoo-fhir/addons/hc_medication/static/src/css/hc_medication.css
         'static/src/css/hc_medication.css',
     ],
 ```
+
+# Install custom modules
+
+Clone module
+
+Transfer
+
+```
+sudo mv <module> /odoo/custom/addons
+```
+Restart
+
+In Odoo, 
+* Activate Developer Mode
+* Update Module List in ```Apps>Update Apps List```
+* Locate installed app
+* Install

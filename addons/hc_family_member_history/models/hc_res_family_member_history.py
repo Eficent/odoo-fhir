@@ -147,10 +147,11 @@ class FamilyMemberHistory(models.Model):
         size=3, 
         help="Approximate age.")                   
     age_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Time UOM", 
+        comodel_name="product.uom", 
+        string="Age UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         default="a", 
-        help="Time unit of measure.")                  
+        help="Age unit of measure.")
     age_range_low = fields.Float(
         string="Age Range Low", 
         help="Low limit of approximate age.")                    
@@ -184,10 +185,11 @@ class FamilyMemberHistory(models.Model):
         size=3, 
         help="Dead? How old/when?.")
     deceased_age_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Deceased Time UOM", 
+        comodel_name="product.uom", 
+        string="Deceased Age UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         default="a", 
-        help="Deceased Time unit of measure.")                  
+        help="Deceased age unit of measure.")
     deceased_age_range_low = fields.Float(
         string="Deceased Age Range Low", 
         help="Low limit of dead? how old/when?.")                    
@@ -301,10 +303,11 @@ class FamilyMemberHistoryCondition(models.Model):
         size=3, 
         help="When condition first manifested.")                 
     onset_age_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Onset Time UOM", 
+        comodel_name="product.uom", 
+        string="Onset Age UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         default="a", 
-        help="Onset Time unit of measure.")              
+        help="Onset age unit of measure.")
     onset_range_low = fields.Float(
         string="Onset Range Low", 
         help="Low limit of when condition first manifested.")                  

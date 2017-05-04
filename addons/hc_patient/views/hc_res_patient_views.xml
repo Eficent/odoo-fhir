@@ -65,7 +65,7 @@
                                 <field name="race_ids" widget="many2many_tags" attrs="{'invisible': [('type','!=','human')]}"/>             
                                 <field name="ethnicity_ids" widget="many2many_tags" attrs="{'invisible': [('type','!=','human')]}"/>
                                 <field name="animal_species_id" attrs="{'invisible': [('type','!=','animal')], 'required': [('type','=','animal')]}"/>
-                                <field name="animal_breed_id" attrs="{'invisible': [('type','!=','animal')]}"/>
+                                <field name="animal_breed_id" attrs="{'invisible': [('type','!=','animal')]}" domain = "[('hierarchy_id', '=', animal_species_id)]"/>
                                 <field name="animal_gender_status_id" attrs="{'invisible': [('type','!=','animal')]}"/>
                             </group>                    
                         </group>                        

@@ -73,8 +73,7 @@
                                 <field name="onset_name"/>
                                 <field name="onset_date_time" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','date_time')]}"/>
                                 <field name="onset_age" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
-                                <!-- <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}" domain="[('category_id', '=', 'uom_categ_utime')]"/> -->
-                                <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}" domain="[('category_id', '=', ref(res_allergy_intolerance.uom_categ_utime))]"/>
+                                <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
                                 <field name="onset_start_date" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','period')]}"/>
                                 <field name="onset_end_date" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','period')]}"/>
                                 <field name="onset_range_low" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>

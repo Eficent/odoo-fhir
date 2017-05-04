@@ -121,10 +121,11 @@ class Condition(models.Model):
         size=3, 
         help="Estimated or actual date, date-time, or age.")
     onset_age_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Onset Age UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         default="a", 
-        help="Onset age unit of measure.")                    
+        help="Onset age unit of measure.")
     onset_start_date = fields.Datetime(
         string="Onset Start Date", 
         help="Start of the estimated or actual date, date-time, or age.")                    
@@ -163,10 +164,11 @@ class Condition(models.Model):
         size=3, 
         help="If/when in resolution/remission.")                    
     abatement_age_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Abatement Age UOM", 
-        default="a",
-        help="Abatement age unit of measure.")                
+        domain="[('category_id','=','Time (UCUM)')]", 
+        default="a", 
+        help="Abatement age unit of measure.")
     abatement_boolean = fields.Boolean(
         string="Abatement Boolean", 
         help="Boolean of if/when in resolution/remission.")                    

@@ -3,13 +3,28 @@
     'name': "Health Care Base",
 
     'summary': """
-        Module needed by all Health Care modules.""",
+        Module needed by other Health Care modules.""",
 
     'description': """
         Contains: FHIR Complex Types, common definitions and data sets
+
+        **Data Types**
+
+        The FHIR specification defines a set of data types that are used for the resource elements. There are four categories of data types: 
+
+        * Simple / primitive types, which are single elements with a primitive value. Examples: string, boolean, dateTime, integer and decimal. Simple/primitive types do not have any models because they have equivalent types in Odoo.
+        * General purpose complex types, which are re-usable clusters of elements. Examples: Address, Identity, HumanName.
+        * Complex data types for metadata. Examples: AvailableTime, ContactDetail, Contributor, RelatedArtifact, UsageContext.
+        * Special purpose data types: Reference, Narrative, Extension, Meta, and Dosage.
+
+        This module defines the last 3 categories.
+
+        **Data Sets**
+
+        This module contains data sets which are used by several other models. Examples: Body Site, Route of Administration, Substance.
     """,
 
-    'author': "Luigi Sison",
+    'author': "FHIR® and Luigi Sison",
     'website': "https://hl7-fhir.github.io/datatypes.html",
 
     # Categories can be used to filter modules in modules listing

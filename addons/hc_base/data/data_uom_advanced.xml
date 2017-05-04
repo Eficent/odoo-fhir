@@ -734,7 +734,11 @@
             
         <record id="uom_categ_usubstance_volume_usubstance_creat" model="product.uom.categ">   
             <field name="name">Substance Volume Substance Creatinine</field>
-        </record>   
+        </record>
+
+        <record id="uom_categ_utime" model="product.uom.categ">  
+            <field name="name">Time</field>
+        </record>    
             
         <record id="uom_categ_uunit_iu_umass_creat" model="product.uom.categ"> 
             <field name="name">Unit IU Mass Creatinine</field>

@@ -92,8 +92,8 @@ class AllergyIntolerance(models.Model):
     onset_age_uom_id = fields.Many2one(
         comodel_name="product.uom", 
         string="Onset Age UOM",
-        # domain=[("category_id", '=', "uom_categ_utime")],
-        default="a", 
+        domain="[('category_id','=','Time (UCUM)')]",
+        default="a",
         help="Onset age unit of measure.")
     onset_start_date = fields.Datetime(
         string="Onset Start Date", 
@@ -246,8 +246,8 @@ class AllergyIntoleranceReaction(models.Model):
         help="How long Manifestations persisted.")
     duration_uom_id = fields.Many2one(
         comodel_name="product.uom", 
-        string="Duration UOM",
-        # domain=[('category_id', '=', 'uom_categ_utime')], 
+        string="Duration UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         help="Duration unit of measure.")            
     severity = fields.Selection(
         string="Reaction Severity", 

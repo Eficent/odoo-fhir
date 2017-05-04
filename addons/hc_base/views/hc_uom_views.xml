@@ -1,16 +1,68 @@
 <openerp>
     <data>
 
+        <!-- Unit of Measure Category Views -->
+
+        <record id="product.product_uom_categ_view_search" model="ir.ui.view">                  
+            <field name="name">UOM Category Search</field>              
+            <field name="model">product.uom.categ</field>                           
+            <field name="arch" type="xml">              
+                <search string="UOM Categories">         
+                    <field name="name" domain="[('name','ilike',self),"/>
+                    <field name="code" domain="[('code','ilike',self),"/>             
+                </search>           
+            </field>                
+        </record>                   
+        
+        <record id="product.product_uom_categ_tree_view" model="ir.ui.view">                 
+            <field name="name">UOM Category Tree</field>              
+            <field name="model">product.uom.categ</field>                
+            <field name="arch" type="xml">              
+                <tree string="UOM Categories">          
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="source_id"/>        
+                </tree>         
+            </field>
+        </record> 
+
+        <record id="product_uom_categ_form_view_inherit" model="ir.ui.view">
+            <field name="name">UOM Category Form</field>            
+            <field name="model">product.uom.categ</field>  
+            <field name="inherit_id" ref="product.product_uom_categ_form_view"/>
+            <field name="arch" type="xml">               
+                <field name="name" position="after">   
+                    <field name="code"/>    
+                    <field name="source_id"/>
+                </field>
+            </field>
+        </record>
+        
+        <act_window id="product_uom_categ_action"           
+                    name="HC UOM Categories"
+                    res_model="product.uom.categ"
+                    view_mode="tree,form"
+                    domain=""
+                    context=""
+                    limit=""/>
+
+        <menuitem id="hc_base.menu_uom_cat"
+                  name="UOM Category"
+                  parent="hc_base.menu_vs"
+                  action="product_uom_categ_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="20"/>
+
         <!-- Unit of Measure Views -->
 
         <record id="product_uom_view_search" model="ir.ui.view">                
-            <field name="name">UOM Search</field>            
-            <field name="model">product.uom</field>            
-<!--             <field name="inherit_id" ref="hc_value_set_contains_view_search"/>     -->        
+            <field name="name">UOM Search</field> 
+            <field name="model">product.uom</field>
             <field name="arch" type="xml">            
-                <search string="UOMs">        
-                    <field name="name"/>    
-                    <field name="code"/>    
+                <search string="UOMs">
+                    <field name="name" domain="[('name','ilike',self),"/>     
+                    <field name="code" domain="[('code','ilike',self),"/>        
+                    <field name="category_id" domain="[('category_id','ilike',self),"/>    
                     <group>    
                         <filter name="group_by_category" string="category" context="{'group_by': 'category_id'}" />
                     </group>    
@@ -25,6 +77,7 @@
             <field name="arch" type="xml">                 
                     <field name="name" position="after">   
                         <field name="code"/>
+                        <field name="sequence"/>
                         <field name="uom_type"/>
                     </field>    
                     <field name="category_id" position="after">    
@@ -40,6 +93,7 @@
             <field name="arch" type="xml">               
                 <field name="name" position="after">   
                     <field name="code"/>
+                    <field name="sequence"/>
                 </field>
                 <field name="rounding" position="after">    
                     <field name="source_id"/>
@@ -62,7 +116,9 @@
                   parent="hc_base.menu_vs" 
                   action="product_uom_action" 
                   groups="hc_base.group_hc_base_manager" 
-                  sequence="14"/>
+                  sequence="21"/>
+
+
 
     </data>
 </openerp>

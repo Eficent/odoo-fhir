@@ -5,23 +5,28 @@
         <!-- Unit of Measurement Category -->
             
         <record id="uom_categ_ulength" model="product.uom.categ">   
-            <field name="name">Length</field>
+            <field name="name">Length (UCUM)</field>
+            <field name="source_id" ref="base.loinc_ucum"/>
         </record>
             
         <record id="uom_categ_umass" model="product.uom.categ"> 
-            <field name="name">Mass</field>
+            <field name="name">Mass (UCUM)</field>
+            <field name="source_id" ref="base.loinc_ucum"/>
         </record>   
             
         <record id="uom_categ_utime" model="product.uom.categ"> 
-            <field name="name">Time</field>
+            <field name="name">Time (UCUM)</field>
+            <field name="source_id" ref="base.loinc_ucum"/>
         </record>
 
         <record id="uom_categ_uunit" model="product.uom.categ"> 
-            <field name="name">Unit</field>
+            <field name="name">Unit (UCUM)</field>
+            <field name="source_id" ref="base.loinc_ucum"/>
         </record>     
 
         <record id="uom_categ_uvolume" model="product.uom.categ">   
-            <field name="name">Volume</field>
+            <field name="name">Volume (UCUM)</field>
+            <field name="source_id" ref="base.loinc_ucum"/>
         </record>  
 
         <!-- Unit of Measurement -->
@@ -293,6 +298,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">second</field>
             <field name="code">s</field>
+            <field name="sequence">1</field>
             <field name ="factor" eval="1.0"/>
             <field name ="rounding" eval="0.001"/>
             <field name ="uom_type">reference</field>
@@ -303,6 +309,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">minute</field>
             <field name="code">min</field>
+            <field name="sequence">2</field>
             <field name ="factor_inv" eval="60.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>
@@ -312,6 +319,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">hour</field>
             <field name="code">h</field>
+            <field name="sequence">3</field>
             <field name ="factor_inv" eval="3600.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>
@@ -321,6 +329,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">day</field>
             <field name="code">d</field>
+            <field name="sequence">4</field>
             <field name ="factor_inv" eval="86400.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>
@@ -330,6 +339,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">week</field>
             <field name="code">wk</field>
+            <field name="sequence">5</field>
             <field name ="factor_inv" eval="604800.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>
@@ -339,6 +349,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">month</field>
             <field name="code">mo</field>
+            <field name="sequence">6</field>
             <field name ="factor_inv" eval="2628000.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>
@@ -348,6 +359,7 @@
             <field name="category_id" ref="uom_categ_utime"/>
             <field name="name">year</field>
             <field name="code">a</field>
+            <field name="sequence">7</field>
             <field name ="factor_inv" eval="31557600.0"/>
             <field name ="uom_type">bigger</field>
             <field name="source_id" ref="base.loinc_ucum"/>

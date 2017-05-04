@@ -204,20 +204,10 @@ class GoalTarget(models.Model):
         string="Due Duration", 
         help="Duration reach goal on or before.")
     due_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Due Duration UOM", 
-        help="Due Duration unit of measure.")
-    # due_duration_uom = fields.Selection(
-    #     string="Due Duration UOM", 
-    #     selection=[
-    #         ("s", "S"), 
-    #         ("min", "Min"), 
-    #         ("h", "H"), 
-    #         ("d", "D"), 
-    #         ("wk", "Wk"), 
-    #         ("mo", "Mo"), 
-    #         ("a", "A")], 
-    #     help="Reach goal on or before unit of measure.")   
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Due Duration unit of measure.") 
 
 class GoalIdentifier(models.Model):    
     _name = "hc.goal.identifier"    

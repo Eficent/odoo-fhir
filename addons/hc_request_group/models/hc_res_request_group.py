@@ -163,9 +163,10 @@ class RequestGroupAction(models.Model):
         string="Timing Duration", 
         help="Duration when the action should take place.")                
     timing_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Timing Duration UOM", 
-        help="Timing Duration unit of measure.")              
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Timing Duration unit of measure.")          
     timing_range_low = fields.Float(
         string="Timing Range Low", 
         help="Low limit of when the action should take place.")                
@@ -314,9 +315,10 @@ class RequestGroupActionRelatedAction(models.Model):
         string="Offset Duration", 
         help="Duration time offset for the relationship.")                
     offset_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Offset Duration UOM", 
-        help="Offset Duration unit of measure.")           
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Offset Duration unit of measure.")
     offset_range_low = fields.Float(
         string="Offset Range Low", 
         help="Low limit of time offset for the relationship.")                

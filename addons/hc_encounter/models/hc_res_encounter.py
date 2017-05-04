@@ -66,9 +66,10 @@ class Encounter(models.Model):
         string="Length", 
         help="Quantity of time the encounter lasted (less time absent).")
     length_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Length UOM", 
-        help="Length unit of measure.")                
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Length unit of measure.")
     reason_ids = fields.Many2many(
         comodel_name="hc.vs.encounter.reason", 
         string="Reasons", 

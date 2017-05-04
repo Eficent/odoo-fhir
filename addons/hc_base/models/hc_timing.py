@@ -55,20 +55,10 @@ class TimingRepeat(models.Model):
         string="Bounds Duration", 
         help="Bounds length of time.")
     bounds_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Bounds Duration UOM", 
-        help="Bounds Duration unit of measure.")
-    # bounds_duration_uom = fields.Selection(
-    #     string="Bounds Duration UOM", 
-    #     selection=[
-    #         ("s", "S"), 
-    #         ("min", "Min"), 
-    #         ("h", "H"), 
-    #         ("d", "D"), 
-    #         ("wk", "Wk"), 
-    #         ("mo", "Mo"), 
-    #         ("a", "A")], 
-    #     help="Unit of time (UCUM)")        
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Bounds Duration unit of measure.")     
     bounds_range_low = fields.Float(
         string="Bounds Range Low", 
         help="Low limit of bounds range.")       
@@ -93,21 +83,11 @@ class TimingRepeat(models.Model):
     duration_max = fields.Float(
         string="Duration Max", 
         help="How long when it happens (Max).")
-    duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Duration Unit", 
-        help="Unit of time (UCUM).")      
-    # duration_unit = fields.Selection(
-    #     string="Duration Unit", 
-    #     selection=[
-    #         ("s", "S"), 
-    #         ("min", "Min"), 
-    #         ("h", "H"), 
-    #         ("d", "D"), 
-    #         ("wk", "Wk"), 
-    #         ("mo", "Mo"), 
-    #         ("a", "A")], 
-    #     help="Unit of time (UCUM)")       
+    duration_unit_id = fields.Many2one(
+        comodel_name="product.uom", 
+        string="Duration Unit",
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Unit of time (UCUM).")            
     frequency = fields.Integer(
         string="Frequency", 
         help="Event occurs frequency times per duration.")       
@@ -121,20 +101,11 @@ class TimingRepeat(models.Model):
         string="Period Max", 
         help="Upper limit of period (3-4 hours).")
     period_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Period Unit", 
-        help="Unit of time (UCUM).")        
-    # period_unit = fields.Selection(
-    #     string="Period Unit", 
-    #     selection=[
-    #         ("s", "S"), 
-    #         ("min", "Min"), 
-    #         ("h", "H"), 
-    #         ("d", "D"), 
-    #         ("wk", "Wk"), 
-    #         ("mo", "Mo"), 
-    #         ("a", "A")], 
-    #     help="Unit of time (UCUM)")       
+        comodel_name="product.uom", 
+        string="Period Unit",
+        domain="[('category_id','=','Time (UCUM)')]",  
+        help="Unit of time (UCUM).")              
+    
     when_id = fields.Many2one(
         comodel_name="hc.vs.event.timing", 
         string="When", 
@@ -142,6 +113,26 @@ class TimingRepeat(models.Model):
     offset = fields.Integer(
         string="Offset", 
         help="Minutes from event (before or after).")                      
+
+# Constraints (reference: http://build.fhir.org/datatypes.html#timing)
+
+# tim-1: On Timing.repeat: if there's a duration, there needs to be duration units (expression on Timing.repeat: duration.empty() or durationUnit.exists())
+
+# tim-2: On Timing.repeat: if there's a period, there needs to be period units (expression on Timing.repeat: period.empty() or periodUnit.exists())
+
+# tim-4: On Timing.repeat: duration SHALL be a non-negative value (expression on Timing.repeat: duration.exists() implies duration >= 0)
+
+# tim-5: On Timing.repeat: period SHALL be a non-negative value (expression on Timing.repeat: period.exists() implies period >= 0)
+
+# tim-6: On Timing.repeat: If there's a periodMax, there must be a period (expression on Timing.repeat: periodMax.empty() or period.exists())
+
+# tim-7: On Timing.repeat: If there's a durationMax, there must be a duration (expression on Timing.repeat: durationMax.empty() or duration.exists())
+
+# tim-8: On Timing.repeat: If there's a countMax, there must be a count (expression on Timing.repeat: countMax.empty() or count.exists())
+
+# tim-9: On Timing.repeat: If there's an offset, there must be a when (and not C, CM, CD, CV) (expression on Timing.repeat: offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not())))
+
+# tim-10: On Timing.repeat: If there's a timeOfDay, there cannot be be a when, or vice versa (expression on Timing.repeat: timeOfDay.empty() or when.empty())
 
 class TimingEvent(models.Model):    
     _name = "hc.timing.event"    
@@ -161,14 +152,4 @@ class EventTiming(models.Model):
     _description = "Event Timing"        
     _inherit = ["hc.value.set.contains"]
 
-# Constraints
 
-# On Timing.repeat: if there's a duration, there needs to be duration units (expression  on Timing.repeat: duration.empty() or durationUnit.exists())
-# On Timing.repeat: if there's a period, there needs to be period units (expression  on Timing.repeat: period.empty() or periodUnit.exists())
-# On Timing.repeat: Either frequency or when can exist, not both (expression  on Timing.repeat: ((period or frequency) and when).not())
-# On Timing.repeat: duration SHALL be a non-negative value (expression  on Timing.repeat: duration.exists() implies duration >= 0)
-# On Timing.repeat: period SHALL be a non-negative value (expression  on Timing.repeat: period.exists() implies period >= 0)
-# On Timing.repeat: If there's a periodMax, there must be a period (expression  on Timing.repeat: periodMax.empty() or period.exists())
-# On Timing.repeat: If there's a durationMax, there must be a duration (expression  on Timing.repeat: durationMax.empty() or duration.exists())
-# On Timing.repeat: If there's a countMax, there must be a count (expression  on Timing.repeat: countMax.empty() or count.exists())
-# On Timing.repeat: If there's an offset, there must be a when (expression  on Timing.repeat: offset.empty() or when.exists())

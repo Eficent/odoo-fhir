@@ -274,8 +274,9 @@ class MedicationRequestDispenseRequest(models.Model):
         string="Expected Supply Duration", 
         help="Number of days supply per dispense.")                  
     expected_supply_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
-        string="Expected Supply Duration UOM",
+        comodel_name="product.uom", 
+        string="Expected Supply Duration UOM", 
+        domain="[('category_id','=','Time (UCUM)')]", 
         default="d", 
         help="Expected Supply Duration unit of measure.")
     performer_id = fields.Many2one(

@@ -112,20 +112,10 @@ class DataRequirementDataFilter(models.Model):
         string="Value Duration", 
         help="Duration value of the filter.")
     value_duration_uom_id = fields.Many2one(
-        comodel_name="hc.vs.time.uom", 
+        comodel_name="product.uom", 
         string="Value Duration UOM", 
-        help="Value Duration unit of measure.")                    
-    # value_duration_uom = fields.Selection(
-    #     string="Value Duration UOM", 
-    #     selection=[
-    #         ("s", "S"), 
-    #         ("min", "Min"), 
-    #         ("h", "H"), 
-    #         ("d", "D"), 
-    #         ("wk", "Wk"), 
-    #         ("mo", "Mo"), 
-    #         ("a", "A")], 
-    #     help="Unit of time (UCUM)")                
+        domain="[('category_id','=','Time (UCUM)')]", 
+        help="Value Duration unit of measure.")             
 
 class DataRequirementProfile(models.Model):    
     _name = "hc.data.reqt.profile"    
