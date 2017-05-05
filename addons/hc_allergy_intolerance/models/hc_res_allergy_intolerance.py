@@ -8,9 +8,10 @@ class AllergyIntolerance(models.Model):
     _inherit = ["hc.basic.association"]
 
     name = fields.Char(
-        string="Event Name", 
+        string="Event Name",
+        # compute="compute_name", 
         required="True", 
-        help="Text representation of the allergy intolerance event. Patient + Allergy + Onset Name.")
+        help="Text representation of the allergy intolerance event. Patient + DOB + Allergy + Asserted Date.")
     identifier_ids = fields.One2many(
         comodel_name="hc.allergy.intolerance.identifier", 
         inverse_name="allergy_intolerance_id", 
@@ -111,7 +112,8 @@ class AllergyIntolerance(models.Model):
         string="Onset String", 
         help="String of when allergy or intolerance was identified.")
     asserted_date = fields.Datetime(
-        string="Asserted Date", 
+        string="Asserted Date",
+        required="True", 
         help="Date record was believed accurate.")               
     recorder_type = fields.Selection(
         string="Recorder Type", 
