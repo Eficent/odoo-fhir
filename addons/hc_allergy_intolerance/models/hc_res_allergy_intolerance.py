@@ -187,7 +187,7 @@ class AllergyIntolerance(models.Model):
                     patient_birth_date = datetime.strftime(datetime.strptime(hc_res_allergy_intolerance.patient_id.birth_date, DF), "%Y-%m-%d")
                     comp_name = comp_name + "("+ patient_birth_date + ")"
             if hc_res_allergy_intolerance.code_id:      
-                comp_name = comp_name + " " + hc_res_allergy_intolerance.code_id.name or '' 
+                comp_name = comp_name + ", " + hc_res_allergy_intolerance.code_id.name or '' 
             if hc_res_allergy_intolerance.asserted_date:        
                 patient_asserted_date = datetime.strftime(datetime.strptime(hc_res_allergy_intolerance.asserted_date, DTF), "%Y-%m-%d") 
                 comp_name = comp_name + " " + patient_asserted_date 
@@ -199,7 +199,7 @@ class AllergyIntolerance(models.Model):
             if hc_res_allergy_intolerance.onset_type == 'date_time':        
                     hc_res_allergy_intolerance.onset_name = str(hc_res_allergy_intolerance.onset_date_time)
             elif hc_res_allergy_intolerance.onset_type == 'age':    
-                    hc_res_allergy_intolerance.onset_name = str(hc_res_allergy_intolerance.onset_age) + ' ' + str(hc_res_allergy_intolerance.onset_age_uom_id.name)
+                    hc_res_allergy_intolerance.onset_name = str(hc_res_allergy_intolerance.onset_age) + ' ' + str(hc_res_allergy_intolerance.onset_age_uom_id.name) + "s old"
             elif hc_res_allergy_intolerance.onset_type == 'period':     
                     hc_res_allergy_intolerance.onset_name = 'Between ' + str(hc_res_allergy_intolerance.onset_start_date) + ' and ' + str(hc_res_allergy_intolerance.onset_end_date)
             elif hc_res_allergy_intolerance.onset_type == 'range':      

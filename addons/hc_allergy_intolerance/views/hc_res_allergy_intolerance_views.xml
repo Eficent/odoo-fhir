@@ -58,19 +58,36 @@
                     <sheet>                                
                         <div class="oe_title oe_left">                      
                             <h1>                    
-                                <field name="name" default_focus="1" placeholder="Allergy Case Name"/>              
+                                <field name="name" placeholder="Allergy Intolerance Event Name (e.g., Patient + DOB + Allergy + Asserted Date)"/>              
                             </h1>                   
                         </div>                      
                         <div name="buttons" class="oe_right oe_button_box"></div>                       
                         <group>                     
-                            <group>                 
+                            <group string="Event" name="event">                 
                                 <field name="patient_id"/>
                                 <field name="code_id" string="Allergy/Intolerance"/>
-                                <field name="code" readonly="1"/>
+                                <field name="asserted_date"/>
                                 <field name="type" widget="radio"/>
-                                <field name="criticality"/>
-                                <field name="onset_type"/>
+                                <field name="criticality"/>               
+                            </group>                    
+                            <group string="Status" name="status">                            
+                                <field name="clinical_status"/>
+                                <field name="verification_status"/>
+                            </group>
+                            <group string = "Who, Where">
+                                <field name="recorder_name"/>
+                                <field name="recorder_type" class="oe_edit_only"/>
+                                <field name="recorder_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('recorder_type','!=','practitioner')]}"/>
+                                <field name="recorder_patient_id" class="oe_edit_only" attrs="{'invisible': [('recorder_type','!=','patient')]}"/>
+                                <field name="asserter_name"/>
+                                <field name="asserter_type" class="oe_edit_only"/>
+                                <field name="asserter_patient_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','patient')]}"/>
+                                <field name="asserter_related_person_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','related_person')]}"/>
+                                <field name="asserter_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','practitioner')]}"/>
+                            </group>
+                            <group string = "Timeline">
                                 <field name="onset_name"/>
+                                <field name="onset_type" class="oe_edit_only"/>
                                 <field name="onset_date_time" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','date_time')]}"/>
                                 <field name="onset_age" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
                                 <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
@@ -78,23 +95,9 @@
                                 <field name="onset_end_date" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','period')]}"/>
                                 <field name="onset_range_low" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
                                 <field name="onset_range_high" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
-                                <field name="onset_string" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','string')]}"/>               
-                            </group>                    
-                            <group>                             
-                                <field name="asserted_date"/>
+                                <field name="onset_string" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','string')]}"/>
                                 <field name="last_occurence"/>
-                                <field name="clinical_status"/>
-                                <field name="verification_status"/>
-                                <field name="recorder_type"/>
-                                <field name="recorder_name"/>
-                                <field name="recorder_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('recorder_type','!=','practitioner')]}"/>
-                                <field name="recorder_patient_id" class="oe_edit_only" attrs="{'invisible': [('recorder_type','!=','patient')]}"/>
-                                <field name="asserter_type"/>
-                                <field name="asserter_name"/>
-                                <field name="asserter_patient_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','patient')]}"/>
-                                <field name="asserter_related_person_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','related_person')]}"/>
-                                <field name="asserter_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','practitioner')]}"/>
-                            </group>                    
+                            </group>               
                         </group>                        
                         <notebook colspan="4">                                        
                             <page string="Reactions">                   

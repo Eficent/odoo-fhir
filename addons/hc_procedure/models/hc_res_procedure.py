@@ -41,7 +41,8 @@ class Procedure(models.Model):
             ("in-progress", "In-Progress"), 
             ("aborted", "Aborted"), 
             ("completed", "Completed"), 
-            ("entered-in-error", "Entered-In-Error")], 
+            ("entered-in-error", "Entered-In-Error")],
+        default = "in-progress",
         help="State of the procedure.")                 
     category_id = fields.Many2one(
         comodel_name="hc.vs.procedure.category", 
@@ -57,7 +58,8 @@ class Procedure(models.Model):
         required="True",  
         selection=[
             ("patient", "Patient"), 
-            ("group", "Group")], 
+            ("group", "Group")],
+        default = "patient", 
         help="Type of subject the procedure was performed on.")                    
     subject_name = fields.Char(
         string="Subject",
@@ -170,7 +172,7 @@ class Procedure(models.Model):
         string="Focal Devices", 
         help="Device changed in procedure.")
 
-    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'performed_date_name')                
+    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'performed_datetime', 'performed_start_date')                
     def _compute_name(self):                
         comp_name = '/'         
         for hc_res_procedure in self:           
@@ -182,9 +184,13 @@ class Procedure(models.Model):
             if hc_res_procedure.subject_type == 'group':    
                 comp_name = hc_res_procedure.subject_group_id.name
             if hc_res_procedure.code_id:        
-                comp_name = comp_name + " " + hc_res_procedure.code_id.name or ''   
-            if hc_res_procedure.performed_date_name:        
-                comp_name = comp_name + " " + hc_res_procedure.performed_date_name   
+                comp_name = comp_name + ", " + hc_res_procedure.code_id.name or ''   
+            if hc_res_procedure.performed_date_type == 'date_time':
+                performed_date = datetime.strftime(datetime.strptime(hc_res_procedure.performed_datetime, DTF), "%Y-%m-%d")
+                comp_name = comp_name + " " + performed_date
+            if hc_res_procedure.performed_date_type == 'period':
+                performed_date = datetime.strftime(datetime.strptime(hc_res_procedure.performed_start_date, DTF), "%Y-%m-%d")    
+                comp_name = comp_name + " " + performed_date   
             hc_res_procedure.name = comp_name       
 
     @api.depends('subject_type')         
@@ -201,7 +207,7 @@ class Procedure(models.Model):
             if hc_res_procedure.performed_date_type == 'date_time': 
                 hc_res_procedure.performed_date_name = str(hc_res_procedure.performed_datetime)
             elif hc_res_procedure.performed_date_type == 'period':  
-                hc_res_procedure.performed_date_name = 'Between' + str(hc_res_procedure.performed_start_date) + ' and ' + str(hc_res_procedure.performed_end_date)
+                hc_res_procedure.performed_date_name = 'Between ' + str(hc_res_procedure.performed_start_date) + ' and ' + str(hc_res_procedure.performed_end_date)
             
 class ProcedurePerformer(models.Model): 
     _name = "hc.procedure.performer"    
@@ -223,7 +229,8 @@ class ProcedurePerformer(models.Model):
             ("organization", "Organization"), 
             ("patient", "Patient"), 
             ("related_person", "Related Person"), 
-            ("device", "Device")], 
+            ("device", "Device")],
+        default = "practitioner", 
         help="Type of practitioner who was involved in the procedure.")
     actor_name = fields.Char(
         string="Actor", 

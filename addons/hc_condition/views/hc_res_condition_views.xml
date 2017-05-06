@@ -64,11 +64,10 @@
                     <group>                                             
                         <group string="Event" name="event">                                         
                             <field name="subject_name"/>
-                            <field name="subject_type"/>
+                            <field name="subject_type" class="oe_edit_only"/>
                             <field name="subject_patient_id" class="oe_edit_only" attrs="{'invisible': [('subject_type','!=','patient')]}" placeholder="Patient"/>
                             <field name="subject_group_id" class="oe_edit_only" attrs="{'invisible': [('subject_type','!=','group')]}" placeholder="Group"/>  
                             <field name="code_id"/>
-                            <field name="code" readonly="1"/>
                             <field name="asserted_date"/>
                             <field name="category_ids" widget="many2many_tags"/>
                         </group>
@@ -80,16 +79,18 @@
                             <field name="stage_summary_id" attrs="{'invisible': [('has_stage','=',False)]}"/>                                    
                         </group>
                         <group string = "Who, Where">
-                            <field name="body_site_ids" widget="many2many_tags"/>
                             <field name="asserter_name"/>
-                            <field name="asserter_type"/>
+                            <field name="asserter_type" class="oe_edit_only"/>
                             <field name="asserter_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','practitioner')]}"/>
                             <field name="asserter_patient_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','patient')]}"/>
                             <field name="asserter_related_person_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','related_person')]}"/>
+                            <field name="body_site_ids" widget="many2many_tags"/>
                         </group>                                          
-                        <group string = "Timeline">                 
+                        <group string = "Timeline">
+                            <label for="onset" string="Onset"/>                 
+                            <div>
                             <field name="onset_name"/>
-                            <field name="onset_type"/>
+                            <field name="onset_type" class="oe_edit_only"/>
                             <field name="onset_date_time" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','date_time')]}"/>
                             <field name="onset_age" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
                             <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
@@ -98,8 +99,9 @@
                             <field name="onset_range_low" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
                             <field name="onset_range_high" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
                             <field name="onset_string" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','string')]}"/>
+                            </div>
                             <field name="abatement_name"/>
-                            <field name="abatement_type"/>
+                            <field name="abatement_type" class="oe_edit_only"/>
                             <field name="abatement_date" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','date')]}"/>
                             <field name="abatement_age" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','age')]}"/>
                             <field name="abatement_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','age')]}"/>
@@ -170,8 +172,8 @@
                                     <sheet>         
                                         <group>     
                                             <group> 
-                                                <field name="stage_assessment_type"/>
                                                 <field name="stage_assessment_name" readonly="1"/>
+                                                <field name="stage_assessment_type" class="oe_edit_only"/>
                                                 <!-- <field name="stage_assessment_observation_id" class="oe_edit_only" attrs="{'invisible': [('stage_assessment_type','!=','observation')]}"/>
                                                 <field name="stage_assessment_clinical_impression_id" class="oe_edit_only" attrs="{'invisible': [('stage_assessment_type','!=','clinical_impression')]}"/>
                                                 <field name="stage_assessment_diagnostic_report_id" class="oe_edit_only" attrs="{'invisible': [('stage_assessment_type','!=','diagnostic_report')]}"/> -->
@@ -207,7 +209,7 @@
                                                                 <group> 
                                                                     <!-- <field name="reference_model"/> -->
                                                                     <field name="detail_name"/>
-                                                                    <field name="detail_type" readonly="1"/>
+                                                                    <field name="detail_type" class="oe_edit_only"/>
 <!--                                                                     <field name="detail_string" class="oe_edit_only" attrs="{'invisible': [('detail_type','!=','string')]}"/>
                                                                     <field name="detail_code_id" class="oe_edit_only" attrs="{'invisible': [('detail_type','!=','code')]}"/> -->
                                                                 </group>    
