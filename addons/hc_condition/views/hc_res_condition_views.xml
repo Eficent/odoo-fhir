@@ -25,7 +25,7 @@
                 <field name="onset_name"/>
                 <field name="abatement_type"/>
                 <field name="abatement_name"/>
-                <field name="date_asserted"/>
+                <field name="asserted_date"/>
                 <field name="asserter_type"/>
                 <field name="asserter_name"/>
                 <field name="note_ids"/>
@@ -46,7 +46,7 @@
 <!--                 <field name="context_name"/> -->
                 <field name="asserter_name"/>
                 <field name="asserter_type"/>
-                <field name="date_asserted"/>
+                <field name="asserted_date"/>
             </tree> 
         </field>        
     </record>
@@ -58,27 +58,38 @@
             <form string="Condition">                                                       
                 <sheet>                                                                                            
                     <h2>
-                        <field name="name" default_focus="1" placeholder="Condition Event Name (e.g., Subject Name + Code + Onset Name)"/>
+                        <field name="name" placeholder="Condition Event Name (e.g., Subject Name + Code + Asserted Date)"/>
                     </h2>                                           
                     <div name="buttons" class="oe_right oe_button_box"></div>                                               
                     <group>                                             
-                        <group>                                         
-                            <field name="subject_type"/>
+                        <group string="Event" name="event">                                         
                             <field name="subject_name"/>
-                            <field name="subject_patient_id" attrs="{'invisible': [('subject_type','!=','patient')]}" placeholder="Patient"/>
-                            <field name="subject_group_id" attrs="{'invisible': [('subject_type','!=','group')]}" placeholder="Group"/>  
+                            <field name="subject_type"/>
+                            <field name="subject_patient_id" class="oe_edit_only" attrs="{'invisible': [('subject_type','!=','patient')]}" placeholder="Patient"/>
+                            <field name="subject_group_id" class="oe_edit_only" attrs="{'invisible': [('subject_type','!=','group')]}" placeholder="Group"/>  
                             <field name="code_id"/>
                             <field name="code" readonly="1"/>
-                            <field name="date_asserted"/>
+                            <field name="asserted_date"/>
+                            <field name="category_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Status" name="status">
                             <field name="clinical_status"/>
                             <field name="verification_status"/>
-                            <field name="category_ids" widget="many2many_tags"/>
-                            <field name="severity_id"/>                                  
-                        </group>                                            
-                        <group>
-                            <field name="body_site_ids" widget="many2many_tags"/>               
-                            <field name="onset_type"/>
+                            <field name="severity_id"/>
+                            <field name="has_stage"/>
+                            <field name="stage_summary_id" attrs="{'invisible': [('has_stage','=',False)]}"/>                                    
+                        </group>
+                        <group string = "Who, Where">
+                            <field name="body_site_ids" widget="many2many_tags"/>
+                            <field name="asserter_name"/>
+                            <field name="asserter_type"/>
+                            <field name="asserter_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','practitioner')]}"/>
+                            <field name="asserter_patient_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','patient')]}"/>
+                            <field name="asserter_related_person_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','related_person')]}"/>
+                        </group>                                          
+                        <group string = "Timeline">                 
                             <field name="onset_name"/>
+                            <field name="onset_type"/>
                             <field name="onset_date_time" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','date_time')]}"/>
                             <field name="onset_age" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
                             <field name="onset_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','age')]}"/>
@@ -87,8 +98,8 @@
                             <field name="onset_range_low" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
                             <field name="onset_range_high" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','range')]}"/>
                             <field name="onset_string" class="oe_edit_only" attrs="{'invisible': [('onset_type','!=','string')]}"/>
-                            <field name="abatement_type"/>
                             <field name="abatement_name"/>
+                            <field name="abatement_type"/>
                             <field name="abatement_date" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','date')]}"/>
                             <field name="abatement_age" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','age')]}"/>
                             <field name="abatement_age_uom_id" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','age')]}"/>
@@ -97,14 +108,7 @@
                             <field name="abatement_end_date" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','period')]}"/>
                             <field name="abatement_range_low" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','range')]}"/>
                             <field name="abatement_range_high" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','range')]}"/>
-                            <field name="abatement_string" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','string')]}"/>
-                            <field name="asserter_type"/>
-                            <field name="asserter_name"/>
-                            <field name="asserter_practitioner_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','practitioner')]}"/>
-                            <field name="asserter_patient_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','patient')]}"/>
-                            <field name="asserter_related_person_id" class="oe_edit_only" attrs="{'invisible': [('asserter_type','!=','related_person')]}"/>
-                            <field name="has_stage"/>
-                            <field name="stage_summary_id" attrs="{'invisible': [('has_stage','=',False)]}"/>
+                            <field name="abatement_string" class="oe_edit_only" attrs="{'invisible': [('abatement_type','!=','string')]}"/>   
                         </group>                                            
                     </group>                                                
                     <notebook>                                              

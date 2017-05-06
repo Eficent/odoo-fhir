@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 class ClinicalImpression(models.Model):    
     _name = "hc.res.clinical.impression"    
     _description = "Clinical Impression"        
 
     name = fields.Char(
-        string="Event Name", 
-        required="True", 
-        help="Text representation of the clinical impression event. Subject Name + Code + Date.")
+        string="Event Name",
+        compute="_compute_name", 
+        store="True", 
+        help="Text representation of the clinical impression event. Subject Name + Clinical Impression + Date.")
     identifier_ids = fields.One2many(
         comodel_name="hc.clinical.impression.identifier", 
         inverse_name="clinical_impression_id", 
@@ -93,7 +97,7 @@ class ClinicalImpression(models.Model):
         help="End of the time of assessment.")
     date = fields.Datetime(
         string="Date", 
-        help="When the assessment occurred.")                
+        help="When the assessment was documented.")             
     assessor_id = fields.Many2one(
         comodel_name="hc.res.practitioner", 
         string="Assessor", 
@@ -145,6 +149,24 @@ class ClinicalImpression(models.Model):
         inverse_name="clinical_impression_id", 
         string="Findings", 
         help="Possible or likely findings and diagnoses.")                               
+              
+    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'date')               
+    def _compute_name(self):                
+        comp_name = '/'         
+        for hc_res_clinical_impression in self:         
+            if hc_res_clinical_impression.subject_type == 'patient':       
+                comp_name = hc_res_clinical_impression.subject_patient_id.name
+                if hc_res_clinical_impression.subject_patient_id.birth_date:    
+                    subject_patient_birth_date = datetime.strftime(datetime.strptime(hc_res_clinical_impression.subject_patient_id.birth_date, DF), "%Y-%m-%d")
+                    comp_name = comp_name + "("+ subject_patient_birth_date + ")"
+            if hc_res_clinical_impression.subject_type == 'group':
+                comp_name = hc_res_clinical_impression.subject_group_id.name
+            if hc_res_clinical_impression.code_id:      
+                comp_name = comp_name + " " + hc_res_clinical_impression.code_id.name or '' 
+            if hc_res_clinical_impression.date:     
+                patient_date = datetime.strftime(datetime.strptime(hc_res_clinical_impression.date, DTF), "%Y-%m-%d")   
+                comp_name = comp_name + " " + patient_date  
+            hc_res_clinical_impression.name = comp_name     
 
     @api.depends('subject_type')          
     def _compute_subject_name(self):            

@@ -383,7 +383,7 @@ class Address(models.Model):
         region = self.region_id and ', '+self.region_id.name or ''
         country = self.country_id and ', '+self.country_id.name or ''
         lines = line1+line2+line3+city+postal+district+state+division+region+country+lines
-        self.name = lines
+        self.text = lines
 
 class AddressUse(models.Model): 
     _name = "hc.address.use"    

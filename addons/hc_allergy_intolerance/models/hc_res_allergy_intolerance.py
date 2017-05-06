@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 class AllergyIntolerance(models.Model): 
     _name = "hc.res.allergy.intolerance"    
@@ -9,8 +12,8 @@ class AllergyIntolerance(models.Model):
 
     name = fields.Char(
         string="Event Name",
-        # compute="compute_name", 
-        required="True", 
+        compute="_compute_name", 
+        store="True", 
         help="Text representation of the allergy intolerance event. Patient + DOB + Allergy + Asserted Date.")
     identifier_ids = fields.One2many(
         comodel_name="hc.allergy.intolerance.identifier", 
@@ -57,7 +60,8 @@ class AllergyIntolerance(models.Model):
         default="low", 
         help="Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.")                    
     code_id = fields.Many2one(
-        comodel_name="hc.vs.allergy.intolerance.code", 
+        comodel_name="hc.vs.allergy.intolerance.code",
+        required="True", 
         string="Allergy/Intolerance", 
         help="Allergy or intolerance.")                   
     code = fields.Char(
@@ -124,7 +128,7 @@ class AllergyIntolerance(models.Model):
     recorder_name = fields.Char(
         string="Recorder",
         compute="_compute_recorder_name",
-        # store="True",
+        store="True",
         help="Individual who recorded the sensitivity.")
     recorder_practitioner_id = fields.Many2one(
         comodel_name="hc.res.practitioner", 
@@ -144,7 +148,7 @@ class AllergyIntolerance(models.Model):
     asserter_name = fields.Char(
         string="Asserter", 
         compute="_compute_asserter_name", 
-        # store="True", 
+        store="True", 
         help="Source of the information about the allergy.")
     asserter_patient_id = fields.Many2one(
         comodel_name="hc.res.patient", 
@@ -171,6 +175,23 @@ class AllergyIntolerance(models.Model):
         inverse_name="allergy_intolerance_id", 
         string="Reactions", 
         help="Adverse Reaction Events linked to exposure to substance.")
+
+    @api.one
+    @api.depends('patient_id', 'code_id', 'asserted_date')
+    def _compute_name(self):                
+        comp_name = '/'         
+        for hc_res_allergy_intolerance in self:         
+            if hc_res_allergy_intolerance.patient_id:       
+                comp_name = hc_res_allergy_intolerance.patient_id.name  
+                if hc_res_allergy_intolerance.patient_id.birth_date:    
+                    patient_birth_date = datetime.strftime(datetime.strptime(hc_res_allergy_intolerance.patient_id.birth_date, DF), "%Y-%m-%d")
+                    comp_name = comp_name + "("+ patient_birth_date + ")"
+            if hc_res_allergy_intolerance.code_id:      
+                comp_name = comp_name + " " + hc_res_allergy_intolerance.code_id.name or '' 
+            if hc_res_allergy_intolerance.asserted_date:        
+                patient_asserted_date = datetime.strftime(datetime.strptime(hc_res_allergy_intolerance.asserted_date, DTF), "%Y-%m-%d") 
+                comp_name = comp_name + " " + patient_asserted_date 
+            hc_res_allergy_intolerance.name = comp_name     
 
     @api.depends('onset_type')              
     def _compute_onset_name(self):              
@@ -203,14 +224,6 @@ class AllergyIntolerance(models.Model):
                 hc_res_allergy_intolerance.asserter_name = hc_res_allergy_intolerance.asserter_related_person_id.name
             elif hc_res_allergy_intolerance.asserter_type == 'practitioner':
                 hc_res_allergy_intolerance.asserter_name = hc_res_allergy_intolerance.asserter_practitioner_id.name
-    
-    # @api.depends('patient','substance','patient_id','substance_id')
-    # def compute_allergy(self):
-    #     allergy = ''
-    #     patient = self.patient_id and ', '+self.patient_id.name or ''   
-    #     substance = self.substance_id and ', '+self.substance_id.name or ''
-    #     allergy = patient+substance+allergy
-    #     self.name = allergy
 
 class AllergyIntoleranceReaction(models.Model): 
     _name = "hc.allergy.intolerance.reaction"   

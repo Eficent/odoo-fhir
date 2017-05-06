@@ -120,33 +120,49 @@ class TimingRepeat(models.Model):
         help="Minutes from event (before or after).")                      
 
     _sql_constraints = [    
-        ('duration_gt_zero',
-        '(bounds_duration >= 0.0)',
-        'Duration SHALL be a non-negative value.')
-        ]
+        ('bounds_duration_gt_zero',
+        'CHECK(bounds_duration >= 0.0)',
+        'Bounds Duration SHALL be a non-negative value.'),
 
-    _sql_constraints = [                    
-        ('range_gt_zero',              
-        '(bounds_range_low >= 0.0)',                
-        'Range SHALL be a non-negative value.')             
-        ]               
+        ('range_low_gt_zero',              
+        'CHECK(bounds_range_low >= 0.0)',                
+        'Range Low SHALL be a non-negative value.'),
 
-    _sql_constraints = [    
-        ('high_greater_low',
-        '(bounds_range_high >= bounds_range_low)',
-        'Range High SHALL not be lower than Range Low.')
-        ]
+        ('range_high_gt_low',
+        'CHECK(bounds_range_high >= bounds_range_low)',
+        'Range High SHALL not be lower than Range Low.'),
 
-    _sql_constraints = [    
-        ('end_greater_start',
+        ('period_end_gt_start',
         'CHECK(bounds_period_end_date >= bounds_period_start_date)',
-        'Period End Date SHALL not be lower than Period Start Date.')
-        ]
+        'Period End Date SHALL not be lower than Period Start Date.'),
 
-    _sql_constraints = [    
-        ('max_greater_base',
-        '(count_max >= count)',
-        'Maximum SHALL not be lower than Base.')
+        ('count_max_gt_count',
+        'CHECK(count_max >= count)',
+        'Maximum Count SHALL not be lower than Count.'),
+
+        ('duration_gt_zero',
+        'CHECK(duration >= 0.0)',
+        'Duration SHALL be a non-negative value.'),
+
+        ('duration_max_gt_duration',
+        'CHECK(duration_max >= duration)',
+        'Maximum Duration SHALL not be lower than Duration.'),
+
+        ('frequency_gt_zero',
+        'CHECK(frequency >= 0.0)',
+        'Frequency SHALL be a non-negative value.'),
+
+        ('frequency_max_gt_frequency',
+        'CHECK(frequency_max >= frequency)',
+        'Maximum Frequency SHALL not be lower than Frequency.'),
+
+        ('period_gt_zero',
+        'CHECK(period >= 0.0)',
+        'Period SHALL be a non-negative value.'),
+
+        ('period_max_gt_period',
+        'CHECK(period_max >= period)',
+        'Maximum Period SHALL not be lower than Period.')  
         ]
 
     @api.depends('bounds_type')         
@@ -168,20 +184,10 @@ class TimingRepeat(models.Model):
 # Implemented in view as <field name="period_unit_id" attrs="{'invisible': [('period','=',0.0)]}"/>
 
 # tim-4: On Timing.repeat: duration SHALL be a non-negative value (expression on Timing.repeat: duration.exists() implies duration >= 0)
-
-    _sql_constraints = [
-        ('duration_gt_zero',
-        'CHECK(duration >= 0.0)',
-        'Duration SHALL be a non-negative value.')
-        ]
+# Implemented in SQL constraint
 
 # tim-5: On Timing.repeat: period SHALL be a non-negative value (expression on Timing.repeat: period.exists() implies period >= 0)
-
-    _sql_constraints = [    
-        ('period_gt_zero',
-        'CHECK(period >= 0.0)',
-        'Period SHALL be a non-negative value.')
-        ]
+# Implemented in SQL constraint
 
 # tim-6: On Timing.repeat: If there's a periodMax, there must be a period (expression on Timing.repeat: periodMax.empty() or period.exists())
 # Implemented in view as <field name="period_uom_id" attrs="{'invisible': [('period_max','=','')]}"/>

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 class Procedure(models.Model):  
     _name = "hc.res.procedure"  
@@ -8,8 +11,9 @@ class Procedure(models.Model):
 
     name = fields.Char(
         string="Event Name", 
-        required="True", 
-        help="Text representation of the procedure event. Subject Name + Code + Performed Date/Period.")                   
+        compute="_compute_name", 
+        store="True", 
+        help="Text representation of the procedure event. Subject Name + Procedure + Performed Date/Period.")                
     identifier_ids = fields.One2many(
         comodel_name="hc.procedure.identifier", 
         inverse_name="procedure_id", 
@@ -57,7 +61,6 @@ class Procedure(models.Model):
         help="Type of subject the procedure was performed on.")                    
     subject_name = fields.Char(
         string="Subject",
-        required="True", 
         compute="_compute_subject_name",
         store="True",  
         help="Who the procedure was performed on.")
@@ -74,7 +77,8 @@ class Procedure(models.Model):
         string="Encounter",
         help="The encounter associated with the procedure.")
     performed_date_type = fields.Selection(
-        string="Performed Date Type", 
+        string="Performed Date Type",
+        required="True",
         selection=[
             ("date_time", "Datetime"),  
             ("period", "Period")], 
@@ -104,7 +108,7 @@ class Procedure(models.Model):
         help="Condition that is the reason the procedure performed.")                 
     reason_code_ids = fields.Many2many(
         comodel_name="hc.vs.procedure.reason", 
-        relation="procedure_reason_code_rel", 
+        # relation="procedure_reason_code_rel", 
         string="Reason Codes", 
         help="Coded reason procedure performed.")
     is_not_performed = fields.Boolean(
@@ -165,6 +169,23 @@ class Procedure(models.Model):
         inverse_name="procedure_id", 
         string="Focal Devices", 
         help="Device changed in procedure.")
+
+    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'performed_date_name')                
+    def _compute_name(self):                
+        comp_name = '/'         
+        for hc_res_procedure in self:           
+            if hc_res_procedure.subject_type == 'patient':      
+                comp_name = hc_res_procedure.subject_patient_id.name    
+                if hc_res_procedure.subject_patient_id.birth_date:    
+                    subject_patient_birth_date = datetime.strftime(datetime.strptime(hc_res_procedure.subject_patient_id.birth_date, DF), "%Y-%m-%d")
+                    comp_name = comp_name + "("+ subject_patient_birth_date + ")"
+            if hc_res_procedure.subject_type == 'group':    
+                comp_name = hc_res_procedure.subject_group_id.name
+            if hc_res_procedure.code_id:        
+                comp_name = comp_name + " " + hc_res_procedure.code_id.name or ''   
+            if hc_res_procedure.performed_date_name:        
+                comp_name = comp_name + " " + hc_res_procedure.performed_date_name   
+            hc_res_procedure.name = comp_name       
 
     @api.depends('subject_type')         
     def _compute_subject_name(self):         

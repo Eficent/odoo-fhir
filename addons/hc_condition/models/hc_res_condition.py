@@ -1,33 +1,36 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 class Condition(models.Model):    
     _name = "hc.res.condition"    
     _description = "Condition"            
 
     name = fields.Char(
-        string="Event Name",
-        required="True", 
-        # compute="_compute_name", 
-        # store="True", 
-        help="Text representation of the condition event. Subject Name + Code + Onset Name.")
+        string="Event Name", 
+        compute="_compute_name", 
+        store="True", 
+        help="Text representation of the condition event. Subject Name + Condition + Asserted Date.")
     identifier_ids = fields.One2many(
         comodel_name="hc.condition.identifier", 
         inverse_name="condition_id", 
         string="Identifiers", 
         help="External Ids for this condition.")                    
     clinical_status = fields.Selection(
-        string="Condition Clinical Status",
+        string="Clinical Status",
         selection=[
             ("active", "Active"), 
             ("recurrence", "Recurrence"), 
             ("inactive", "Inactive"), 
             ("remission", "Remission"), 
             ("resolved", "Resolved")],
+        default="active",
         help="The clinical status of the condition.")                    
     verification_status = fields.Selection(
-        string="Condition Verification Status", 
+        string="Verification Status", 
         required="True", 
         selection=[
             ("provisional", "Provisional"), 
@@ -35,7 +38,8 @@ class Condition(models.Model):
             ("confirmed", "Confirmed"), 
             ("refuted", "Refuted"), 
             ("entered-in-error", "Entered-In-Error"), 
-            ("unknown", "Unknown")], 
+            ("unknown", "Unknown")],
+        default="provisional", 
         help="The verification status to support the clinical status of the condition.")                    
     category_ids = fields.Many2many(
         comodel_name="hc.vs.condition.category", 
@@ -70,7 +74,7 @@ class Condition(models.Model):
     subject_name = fields.Char(
         string="Subject", 
         compute="_compute_subject_name", 
-        # store="True", 
+        store="True", 
         help="Who has the condition?")             
     subject_patient_id = fields.Many2one(
         comodel_name="hc.res.patient", 
@@ -111,7 +115,7 @@ class Condition(models.Model):
     onset_name = fields.Char(
         string="Onset", 
         compute="_compute_onset_name",
-        # store="True", 
+        store="True", 
         help="Estimated or actual date, date-time, or age.")             
     onset_date_time = fields.Datetime(
         string="Onset Date Time", 
@@ -154,7 +158,7 @@ class Condition(models.Model):
     abatement_name = fields.Char(
         string="Abatement", 
         compute="_compute_abatement_name",
-        # store="True", 
+        store="True", 
         help="If/when in resolution/remission .")                   
     abatement_date = fields.Date(
         string="Abatement Date", 
@@ -187,9 +191,10 @@ class Condition(models.Model):
     abatement_string = fields.Char(
         string="Abatement String", 
         help="String of if/when in resolution/remission.")                    
-    date_asserted = fields.Date(
-        string="Date Asserted",
-        help="When first entered.")                    
+    asserted_date = fields.Datetime(
+        string="Asserted Date",
+        required="True", 
+        help="Date record was believed accurate.")                  
     asserter_type = fields.Selection(
         string="Asserter Type",
         selection=[
@@ -200,7 +205,7 @@ class Condition(models.Model):
     asserter_name = fields.Char(
         string="Asserter", 
         compute="_compute_asserter_name",
-        # store="True",  
+        store="True",  
         help="Person who asserts this condition.")                  
     asserter_practitioner_id = fields.Many2one(
         comodel_name="hc.res.practitioner", 
@@ -237,18 +242,32 @@ class Condition(models.Model):
         string="Evidence", 
         help="Supporting evidence.")                    
 
-    @api.multi          
+    @api.one                
+    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'asserted_date')              
+    def _compute_name(self):                
+        comp_name = '/'         
+        for hc_res_condition in self:
+            if hc_res_condition.subject_type == 'patient':           
+                comp_name = hc_res_condition.subject_patient_id.name    
+                if hc_res_condition.subject_patient_id.birth_date:  
+                    subject_patient_birth_date = datetime.strftime(datetime.strptime(hc_res_condition.subject_patient_id.birth_date, DF), "%Y-%m-%d")
+                    comp_name = comp_name + "("+ subject_patient_birth_date + ")"
+            if hc_res_condition.subject_type == 'group':
+                    comp_name = hc_res_condition.subject_group_id.name            
+            if hc_res_condition.code_id:        
+                comp_name = comp_name + ", " + hc_res_condition.code_id.name or ''   
+            if hc_res_condition.asserted_date:      
+                patient_asserted_date = datetime.strftime(datetime.strptime(hc_res_condition.asserted_date, DTF), "%Y-%m-%d")   
+                comp_name = comp_name + " " + patient_asserted_date 
+            hc_res_condition.name = comp_name       
+          
+    @api.depends('subject_type')          
     def _compute_subject_name(self):            
         for hc_res_condition in self:       
             if hc_res_condition.subject_type == 'patient':  
                 hc_res_condition.subject_name = hc_res_condition.subject_patient_id.name
             elif hc_res_condition.subject_type == 'group':  
                 hc_res_condition.subject_name = hc_res_condition.subject_group_id.name
-
-    # @api.depends('code_id' 'subject_name')   
-    # def _compute_name(self):    
-    #     for hc_res_condition in self:
-    #         hc_res_condition.name = str(hc_res_condition.subject_name) + ' ' + str(hc_res_condition.code_id.name)
 
     # @api.multi          
     # def _compute_context_name(self):            
@@ -258,38 +277,38 @@ class Condition(models.Model):
     #         elif hc_res_condition.context_type == 'episode_of_care':  
     #             hc_res_condition.context_name = hc_res_condition.context_episode_of_care_id.name
 
-
-    @api.multi          
+      
+    @api.depends('onset_type')          
     def _compute_onset_name(self):          
         for hc_res_condition in self:       
-            if hc_res_condition.onset_type == 'date_time':   
-                hc_res_condition.onset_name = hc_res_condition.onset_date_time
+            if hc_res_condition.onset_type == 'date':   
+                hc_res_condition.onset_name = str(hc_res_condition.onset_date)
             elif hc_res_condition.onset_type == 'age':  
-                hc_res_condition.onset_name = hc_res_condition.onset_age
-            # elif hc_res_condition.onset_type == 'period':   
-            #     hc_res_condition.onset_name = hc_res_condition.onset_period_id.name
-            # elif hc_res_condition.onset_type == 'range':    
-            #     hc_res_condition.onset_name = hc_res_condition.onset_range_id.name
-            elif hc_res_condition.onset_type == 'string':   
+                hc_res_condition.onset_name = str(hc_res_condition.onset_age) + " " + str(hc_res_condition.onset_age_uom_id.name) + "s old"
+            elif hc_res_condition.onset_type == 'period':  
+                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_start_date) + " and " + str(hc_res_condition.onset_end_date)
+            elif hc_res_condition.onset_type == 'range':    
+                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_range_low) + " and " + str(hc_res_condition.onset_range_high)
+            elif hc_res_condition.onset_type == 'string':
                 hc_res_condition.onset_name = hc_res_condition.onset_string
 
-    @api.multi          
+    @api.depends('abatement_type')          
     def _compute_abatement_name(self):          
         for hc_res_condition in self:       
             if hc_res_condition.abatement_type == 'date':   
-                hc_res_condition.abatement_name = hc_res_condition.abatement_date
+                hc_res_condition.abatement_name = str(hc_res_condition.abatement_date)
             elif hc_res_condition.abatement_type == 'age':  
-                hc_res_condition.abatement_name = hc_res_condition.abatement_age
+                hc_res_condition.abatement_name = str(hc_res_condition.abatement_age) + " " + str(hc_res_condition.abatement_age_uom_id.name) + "s old"
             elif hc_res_condition.abatement_type == 'boolean':  
                 hc_res_condition.abatement_name = hc_res_condition.abatement_boolean
-            # elif hc_res_condition.abatement_type == 'period':   
-            #     hc_res_condition.abatement_name = hc_res_condition.abatement_period_id.name
-            # elif hc_res_condition.abatement_type == 'range':    
-            #     hc_res_condition.abatement_name = hc_res_condition.abatement_range_id.name
+            elif hc_res_condition.abatement_type == 'period':   
+                hc_res_condition.abatement_name = "Between " + str(hc_res_condition.abatement_start_date) + " and " + str(hc_res_condition.abatement_end_date)
+            elif hc_res_condition.abatement_type == 'range':    
+                hc_res_condition.abatement_name = "Between " + str(hc_res_condition.abatement_range_low) + " and " + str(hc_res_condition.abatement_range_high)
             elif hc_res_condition.abatement_type == 'string':   
                 hc_res_condition.abatement_name = hc_res_condition.abatement_string
 
-    @api.multi          
+    @api.depends('asserter_type')           
     def _compute_asserter_name(self):           
         for hc_res_condition in self:       
             if hc_res_condition.asserter_type == 'practitioner':    
