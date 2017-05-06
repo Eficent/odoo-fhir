@@ -404,5 +404,5 @@ class AddressUse(models.Model):
             ("postal", "Postal"), 
             ("physical", "Physical"), 
             ("both", "Both")], 
-        default="Both",
+        default="both",
 		help="Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both.")      
