@@ -29,8 +29,10 @@
     'depends': ['hc_medication_administration'],
 
     # always loaded
-    'data': [
+	'data': [
         'security/ir.model.access.csv',
+        # 'data/hc.parent.procedure.not.performed.reason.csv',
+        # 'data/hc.vs.procedure.not.performed.reason.csv',
         'views/hc_res_procedure_views.xml',
         'views/hc_res_procedure_templates.xml',
     ],

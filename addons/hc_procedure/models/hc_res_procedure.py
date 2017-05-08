@@ -543,6 +543,28 @@ class ProcedureNotPerformed(models.Model):
         string="Parent", 
         help="Parent procedure not performed.")
 
+class ParentProcedureNotPerformedReason(models.Model):    
+    _name = "hc.parent.procedure.not.performed.reason"  
+    _description = "Parent Procedure Not Performed Reason"          
+    _inherit = ["hc.basic.association"] 
+    # _inherits = {"hc.vs.procedure.not.performed.reason": "procedure_not_performed_reason_id"}   
+
+    procedure_not_performed_reason_id = fields.Many2one(
+        comodel_name="hc.vs.procedure.not.performed.reason", 
+        string="Procedure Not Performed Reason", 
+        # ondelete="restrict", 
+        # required="True", 
+        help="Procedure Not Performed Reason associated with this Parent Procedure Not Performed Reason.")                          
+
+class ProcedureNotPerformedReason(models.Model):  
+    _inherit = "hc.vs.procedure.not.performed.reason"
+
+    contains_ids = fields.One2many(
+        comodel_name="hc.parent.procedure.not.performed.reason",
+        inverse_name="procedure_not_performed_reason_id", 
+        string="Parents", 
+        help="Parent Procedure Not Performed Reason.")
+
 class ProcedureCategory(models.Model):  
     _name = "hc.vs.procedure.category"  
     _description = "Procedure Category"     
