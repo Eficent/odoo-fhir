@@ -2,6 +2,7 @@
 
 from openerp import models, fields, api
 
+
 class Coverage(models.Model):
     _name = "hc.res.coverage"
     _description = "Coverage"
@@ -23,11 +24,6 @@ class Coverage(models.Model):
             ("patient", "Patient"), 
             ("related person", "Related Person")], 
         help="Type of plan or agreement issuer.")
-    issuer_name = fields.Char(
-        string="Issuer",
-        required="True", 
-        compute="compute_issuer_name", 
-        help="Identifier for the plan or agreement issuer.")
     issuer_identifier_id = fields.Many2one(
         comodel_name="hc.issuer.identifier", 
         string="Issuer Identifier", 
@@ -68,11 +64,6 @@ class Coverage(models.Model):
             ("patient", "Patient"), 
             ("organization", "Organization")], 
         help="Type of plan holder.")
-    planholder_name = fields.Char(
-        string="Planholder", 
-        compute="compute_planholder_name", 
-        required="True", 
-        help="Plan holder.")
     planholder_identifier_id = fields.Many2one(
         comodel_name="hc.planholder.identifier", 
         string="Planholder Identifier", 
