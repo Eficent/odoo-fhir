@@ -26,7 +26,11 @@ class ValueSetContains(models.AbstractModel):
         help="User display for the concept.")
     level = fields.Integer(
         string="Level", 
-        help="Level in a hierarchy of codes.")
+        help="Level as a parent in a hierarchy of codes.")
+    child_level = fields.Integer(
+        string="Child Level",
+        compute="_compute_child_level", 
+        help="Level as child in a hierarchy of codes.")
     source_id = fields.Many2one(
         comodel_name="res.partner", 
         string="Source", 
@@ -47,6 +51,10 @@ class ValueSetContains(models.AbstractModel):
         'UNIQUE(code)',
         "The concept code must be unique.")
         ]
+
+    @api.depends('level')
+    def _compute_child_level(self):
+        self.child_level = self.level + 1
 
     # @api.one
     # @api.constrains('name', 'description')
