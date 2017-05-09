@@ -501,7 +501,7 @@
                                 <field name="contains_ids" mode="tree">                         
                                     <tree>                      
                                         <field name="name"/>
-                                        <!-- <field name="child_level"/> -->                 
+                                        <field name="child_level"/>                 
                                     </tree>                     
                                     <form>                      
                                         <sheet>                              
