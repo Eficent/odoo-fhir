@@ -547,13 +547,13 @@ class ParentProcedureNotPerformedReason(models.Model):
     _name = "hc.parent.procedure.not.performed.reason"  
     _description = "Parent Procedure Not Performed Reason"          
     _inherit = ["hc.basic.association"] 
-    # _inherits = {"hc.vs.procedure.not.performed.reason": "procedure_not_performed_reason_id"}   
+    _inherits = {"hc.vs.procedure.not.performed.reason": "procedure_not_performed_reason_id"}   
 
     procedure_not_performed_reason_id = fields.Many2one(
         comodel_name="hc.vs.procedure.not.performed.reason", 
         string="Procedure Not Performed Reason", 
-        # ondelete="restrict", 
-        # required="True", 
+        ondelete="restrict", 
+        required="True", 
         help="Procedure Not Performed Reason associated with this Parent Procedure Not Performed Reason.")                          
 
 class ProcedureNotPerformedReason(models.Model):  

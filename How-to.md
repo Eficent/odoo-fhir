@@ -181,6 +181,33 @@ createdb FHIR-DEV
 ./odoo.py -d FHIR-DEV --addons-path /odoo/odoo-fhir/addons
 
 ```
+## Install database GUI, pgAdminIII
+
+
+`sudo apt-get install pgadmin3`
+
+Run pgAdminIII
+
+Change psql password
+
+```psql
+
+alter user <username> with password '<password>';
+
+```
+control-z
+
+In pgadmin3, Add a connection (first icon in upper left corner)
+```
+Name: localhost
+Host: localhost
+Port: 5432 (already entered)
+Service: leave blank
+Maintenance DB: postgress (already entered)
+Username: <username> (already entered)
+Password: <password>
+Password: odoo
+```
 
 ## Do every time a change occurs
 
