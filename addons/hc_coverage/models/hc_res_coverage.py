@@ -7,6 +7,7 @@ class Coverage(models.Model):
     _name = "hc.res.coverage"
     _description = "Coverage"
 
+    name = fields.Char(string='Name', related='plan', store=True)
     status = fields.Selection(
         string="Status", required="True", 
         selection=[
