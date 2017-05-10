@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Payment Notice Action and Menu --> 
-    
-        <act_window id="hc_res_payment_notice_action"   
+        <!-- Payment Notice Action and Menu -->
+
+        <act_window id="hc_res_payment_notice_action"
                     name="HC Payment Notices"
                     res_model="hc.res.payment.notice"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_payment_notice.menu_pmt_notice" 
-                  name="Payment Notices" 
-                  parent="hc_base.menu_fina_pmt" 
-                  action="hc_res_payment_notice_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_payment_notice.menu_pmt_notice"
+                  name="Payment Notices"
+                  parent="hc_base.menu_fina_pmt"
+                  action="hc_res_payment_notice_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="10"/>
 
     </data>

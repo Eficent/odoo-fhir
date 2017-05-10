@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcDeviceUseStatement(http.Controller):
 #     @http.route('/hc_device_use_statement/hc_device_use_statement/', auth='public')

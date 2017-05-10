@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcPaymentReconciliation(http.Controller):
 #     @http.route('/hc_payment_reconciliation/hc_payment_reconciliation/', auth='public')

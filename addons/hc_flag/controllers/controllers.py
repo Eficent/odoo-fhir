@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcFlag(http.Controller):
 #     @http.route('/hc_flag/hc_flag/', auth='public')

@@ -1,8 +1,8 @@
 <openerp>
     <data>
-        <!-- Sequence Action and Menu --> 
-  
-        <act_window id="hc_res_sequence_action" 
+        <!-- Sequence Action and Menu -->
+
+        <act_window id="hc_res_sequence_action"
                     name="HC Sequences"
                     res_model="hc.res.sequence"
                     view_mode="tree,form"
@@ -10,12 +10,12 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_sequence.menu_seq" 
+        <menuitem id="hc_sequence.menu_seq"
                   name="Sequences"
-                  web_icon="hc_sequence,static/description/icon.png"   
-                  parent="hc_base.menu_clinic_diag" 
-                  action="hc_res_sequence_action" 
-                  groups="hc_base.group_hc_base_manager" 
+                  web_icon="hc_sequence,static/description/icon.png"
+                  parent="hc_base.menu_clinic_diag"
+                  action="hc_res_sequence_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="40"/>
 
     </data>

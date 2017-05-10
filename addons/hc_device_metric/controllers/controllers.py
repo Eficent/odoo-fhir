@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcDeviceMetric(http.Controller):
 #     @http.route('/hc_device_metric/hc_device_metric/', auth='public')

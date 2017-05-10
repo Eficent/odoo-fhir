@@ -1,22 +1,22 @@
 <openerp>
     <data>
 
-     <!-- Claim Response Action and Menu -->    
-    
-    <act_window id="hc_res_claim_response_action"   
-                name="HC Claim Responses"
-                res_model="hc.res.claim.response"
-                view_mode="tree,form"
-                domain=""
-                context=""
-                limit=""/>
-   
-   <menuitem id="hc_claim_response.menu_claim_resp" 
-             name="Claim Responses" 
-             parent="hc_base.menu_fina_bill" 
-             action="hc_res_claim_response_action" 
-             groups="hc_base.group_hc_base_manager" 
-             sequence="20"/>
+        <!-- Claim Response Action and Menu -->
+
+        <act_window id="hc_res_claim_response_action"
+                    name="HC Claim Responses"
+                    res_model="hc.res.claim.response"
+                    view_mode="tree,form"
+                    domain=""
+                    context=""
+                    limit=""/>
+
+        <menuitem id="hc_claim_response.menu_claim_resp"
+                  name="Claim Responses"
+                  parent="hc_base.menu_fina_bill"
+                  action="hc_res_claim_response_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="20"/>
 
     </data>
 </openerp>

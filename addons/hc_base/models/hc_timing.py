@@ -1,179 +1,185 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
-class Timing(models.Model):    
-    _name = "hc.timing"    
-    _description = "Timing"        
+
+class Timing(models.Model):
+    _name = "hc.timing"
+    _description = "Timing"
 
     name = fields.Char(
-        string="Timing Name", 
-        required="True", 
+        string="Timing Name",
+        required="True",
         help="Human-readable label for this timing definition.")
     event_ids = fields.One2many(
-        comodel_name="hc.timing.event.date", 
-        inverse_name="timing_id", 
-        string="Event Dates", 
-        help="When the event occurs.")                
+        comodel_name="hc.timing.event.date",
+        inverse_name="timing_id",
+        string="Event Dates",
+        help="When the event occurs.")
     code_id = fields.Many2one(
-        comodel_name="hc.vs.timing.abbreviation", 
-        string="Code", 
-        help="Timing abbreviation.")               
+        comodel_name="hc.vs.timing.abbreviation",
+        string="Code",
+        help="Timing abbreviation.")
     repeat_ids = fields.One2many(
-        comodel_name="hc.timing.repeat", 
-        inverse_name="timing_id", 
-        string="Repeats", 
-        help="When the event is to occur.")                
+        comodel_name="hc.timing.repeat",
+        inverse_name="timing_id",
+        string="Repeats",
+        help="When the event is to occur.")
 
-class TimingRepeat(models.Model):   
-    _name = "hc.timing.repeat"  
+
+class TimingRepeat(models.Model):
+    _name = "hc.timing.repeat"
     _description = "Timing Repeat"
-    
+
     timing_id = fields.Many2one(
-        comodel_name="hc.timing", 
-        string="Timing", 
-        required="True", 
-        help="Timing associated with this repeat.")        
+        comodel_name="hc.timing",
+        string="Timing",
+        required="True",
+        help="Timing associated with this repeat.")
     bounds_type = fields.Selection(
-        string="Bounds Type",  
+        string="Bounds Type",
         selection=[
-            ("duration", "Duration"), 
-            ("range", "Range"), 
-            ("period", "Period")], 
-        help="Type of bounds.")       
+            ("duration", "Duration"),
+            ("range", "Range"),
+            ("period", "Period")],
+        help="Type of bounds.")
     bounds_name = fields.Char(
-        string="Bounds", 
+        string="Bounds",
         compute="_compute_bounds_name",
         store="True",
-        help="Length/Range of lengths, or (Start and/or end) limit.")        
+        help="Length/Range of lengths, or (Start and/or end) limit.")
     bounds_duration = fields.Float(
-        string="Bounds Duration", 
+        string="Bounds Duration",
         help="Bounds length of time.")
     bounds_duration_uom_id = fields.Many2one(
-        comodel_name="product.uom", 
-        string="Bounds Duration UOM", 
-        domain="[('category_id','=','Time (UCUM)')]", 
-        help="Bounds Duration unit of measure.")     
+        comodel_name="product.uom",
+        string="Bounds Duration UOM",
+        domain="[('category_id','=','Time (UCUM)')]",
+        help="Bounds Duration unit of measure.")
     bounds_range_low = fields.Float(
-        string="Bounds Range Low", 
-        help="Low limit of bounds range.")       
+        string="Bounds Range Low",
+        help="Low limit of bounds range.")
     bounds_range_high = fields.Float(
-        string="Bounds Range High", 
-        help="High limit of bounds range.")        
+        string="Bounds Range High",
+        help="High limit of bounds range.")
     bounds_period_start_date = fields.Datetime(
-        string="Bounds Period Start Date", 
-        help="Start of the bounds period.")       
+        string="Bounds Period Start Date",
+        help="Start of the bounds period.")
     bounds_period_end_date = fields.Datetime(
-        string="Bounds Period End Date", 
-        help="End of the bounds period.")     
+        string="Bounds Period End Date",
+        help="End of the bounds period.")
     count = fields.Integer(
-        string="Count", 
-        help="Number of times to repeat.")       
+        string="Count",
+        help="Number of times to repeat.")
     count_max = fields.Integer(
-        string="Count Max", 
-        help="Maximum number of times to repeat.")       
+        string="Count Max",
+        help="Maximum number of times to repeat.")
     duration = fields.Float(
-        string="Duration", 
-        help="How long when it happens.")     
+        string="Duration",
+        help="How long when it happens.")
     duration_max = fields.Float(
-        string="Duration Max", 
+        string="Duration Max",
         help="How long when it happens (Max).")
     duration_unit_id = fields.Many2one(
-        comodel_name="product.uom", 
+        comodel_name="product.uom",
         string="Duration UOM",
-        domain="[('category_id','=','Time (UCUM)')]", 
-        help="Unit of time (UCUM).")            
+        domain="[('category_id','=','Time (UCUM)')]",
+        help="Unit of time (UCUM).")
     frequency = fields.Integer(
-        string="Frequency", 
-        help="Event occurs frequency times per duration.")       
+        string="Frequency",
+        help="Event occurs frequency times per duration.")
     frequency_max = fields.Integer(
-        string="Frequency Max", 
-        help="Event occurs frequency times per duration.")       
+        string="Frequency Max",
+        help="Event occurs frequency times per duration.")
     period = fields.Float(
-        string="Period", 
-        help="Event occurs frequency times per period.")     
+        string="Period",
+        help="Event occurs frequency times per period.")
     period_max = fields.Float(
         string="Period Max",
         help="Upper limit of period (3-4 hours).")
     period_unit_id = fields.Many2one(
-        comodel_name="product.uom", 
+        comodel_name="product.uom",
         string="Period UOM",
-        domain="[('category_id','=','Time (UCUM)')]",  
-        help="Unit of time (UCUM).")              
+        domain="[('category_id','=','Time (UCUM)')]",
+        help="Unit of time (UCUM).")
     day_of_week_ids = fields.Many2many(
-        comodel_name="hc.vs.days.of.week", 
-        relation="timing_repeat_day_of_week_rel", 
-        string="Days of Week", 
+        comodel_name="hc.vs.days.of.week",
+        relation="timing_repeat_day_of_week_rel",
+        string="Days of Week",
         help="If one or more days of week is provided, then the action happens only on the specified day(s).")
     time_of_day_ids = fields.One2many(
-        comodel_name="hc.timing.repeat.time.of.day", 
-        inverse_name="repeat_id", 
-        string="Time Of Days", 
+        comodel_name="hc.timing.repeat.time.of.day",
+        inverse_name="repeat_id",
+        string="Time Of Days",
         help="Time of day for action.")
     when_ids = fields.Many2many(
-        comodel_name="hc.vs.timing.event", 
-        relation="timing_repeat_when_rel", 
-        string="When", 
+        comodel_name="hc.vs.timing.event",
+        relation="timing_repeat_when_rel",
+        string="When",
         help="Regular life events the event is tied to.")
     offset = fields.Integer(
-        string="Offset Minutes", 
-        help="Minutes from event (before or after).")                      
+        string="Offset Minutes",
+        help="Minutes from event (before or after).")
 
-    _sql_constraints = [    
+    _sql_constraints = [
         ('bounds_duration_gt_zero',
-        'CHECK(bounds_duration >= 0.0)',
-        'Bounds Duration SHALL be a non-negative value.'),
+         'CHECK(bounds_duration >= 0.0)',
+         'Bounds Duration SHALL be a non-negative value.'),
 
-        ('range_low_gt_zero',              
-        'CHECK(bounds_range_low >= 0.0)',                
-        'Range Low SHALL be a non-negative value.'),
+        ('range_low_gt_zero',
+         'CHECK(bounds_range_low >= 0.0)',
+         'Range Low SHALL be a non-negative value.'),
 
         ('range_high_gt_low',
-        'CHECK(bounds_range_high >= bounds_range_low)',
-        'Range High SHALL not be lower than Range Low.'),
+         'CHECK(bounds_range_high >= bounds_range_low)',
+         'Range High SHALL not be lower than Range Low.'),
 
         ('period_end_gt_start',
-        'CHECK(bounds_period_end_date >= bounds_period_start_date)',
-        'Period End Date SHALL not be lower than Period Start Date.'),
+         'CHECK(bounds_period_end_date >= bounds_period_start_date)',
+         'Period End Date SHALL not be lower than Period Start Date.'),
 
         ('count_max_gt_count',
-        'CHECK(count_max >= count)',
-        'Maximum Count SHALL not be lower than Count.'),
+         'CHECK(count_max >= count)',
+         'Maximum Count SHALL not be lower than Count.'),
 
         ('duration_gt_zero',
-        'CHECK(duration >= 0.0)',
-        'Duration SHALL be a non-negative value.'),
+         'CHECK(duration >= 0.0)',
+         'Duration SHALL be a non-negative value.'),
 
         ('duration_max_gt_duration',
-        'CHECK(duration_max >= duration)',
-        'Maximum Duration SHALL not be lower than Duration.'),
+         'CHECK(duration_max >= duration)',
+         'Maximum Duration SHALL not be lower than Duration.'),
 
         ('frequency_gt_zero',
-        'CHECK(frequency >= 0.0)',
-        'Frequency SHALL be a non-negative value.'),
+         'CHECK(frequency >= 0.0)',
+         'Frequency SHALL be a non-negative value.'),
 
         ('frequency_max_gt_frequency',
-        'CHECK(frequency_max >= frequency)',
-        'Maximum Frequency SHALL not be lower than Frequency.'),
+         'CHECK(frequency_max >= frequency)',
+         'Maximum Frequency SHALL not be lower than Frequency.'),
 
         ('period_gt_zero',
-        'CHECK(period >= 0.0)',
-        'Period SHALL be a non-negative value.'),
+         'CHECK(period >= 0.0)',
+         'Period SHALL be a non-negative value.'),
 
         ('period_max_gt_period',
-        'CHECK(period_max >= period)',
-        'Maximum Period SHALL not be lower than Period.')  
-        ]
+         'CHECK(period_max >= period)',
+         'Maximum Period SHALL not be lower than Period.')
+    ]
 
-    @api.depends('bounds_type')         
-    def _compute_bounds_name(self):         
+    @api.depends('bounds_type')
+    def _compute_bounds_name(self):
         for hc_timing_repeat in self:
-            if hc_timing_repeat.bounds_type == 'duration':  
-                hc_timing_repeat.bounds_name = str(hc_timing_repeat.bounds_duration) + " " + str(hc_timing_repeat.bounds_duration_uom_id.name)
-            elif hc_timing_repeat.bounds_type == 'period':    
-                hc_timing_repeat.bounds_name = "Between " + str(hc_timing_repeat.bounds_period_start_date) + " and " + str(hc_timing_repeat.bounds_period_end_date)
-            elif hc_timing_repeat.bounds_type == 'range': 
-                hc_timing_repeat.bounds_name = "Between " + str(hc_timing_repeat.bounds_range_low) + " and " + str(hc_timing_repeat.bounds_range_high)
+            if hc_timing_repeat.bounds_type == 'duration':
+                hc_timing_repeat.bounds_name = str(hc_timing_repeat.bounds_duration) + " " + str(
+                    hc_timing_repeat.bounds_duration_uom_id.name)
+            elif hc_timing_repeat.bounds_type == 'period':
+                hc_timing_repeat.bounds_name = "Between " + str(
+                    hc_timing_repeat.bounds_period_start_date) + " and " + str(hc_timing_repeat.bounds_period_end_date)
+            elif hc_timing_repeat.bounds_type == 'range':
+                hc_timing_repeat.bounds_name = "Between " + str(hc_timing_repeat.bounds_range_low) + " and " + str(
+                    hc_timing_repeat.bounds_range_high)
+
 
 # Constraints (reference: http://build.fhir.org/datatypes.html#timing)
 
@@ -203,21 +209,22 @@ class TimingRepeat(models.Model):
 
 # tim-10: On Timing.repeat: If there's a timeOfDay, there cannot be be a when, or vice versa (expression on Timing.repeat: timeOfDay.empty() or when.empty())
 # Implemented in view as <page string="Times of Day" attrs="{'invisible': [('offset','&gt;',0)]}">
-                   
 
-class TimingEventDate(models.Model):  
-    _name = "hc.timing.event.date"   
-    _description = "Timing Event Date"           
-    _inherit = ["hc.basic.association"]       
+
+class TimingEventDate(models.Model):
+    _name = "hc.timing.event.date"
+    _description = "Timing Event Date"
+    _inherit = ["hc.basic.association"]
 
     timing_id = fields.Many2one(
-        comodel_name="hc.timing", 
-        string="Timing", 
-        required="True", 
-        help="Timing associated with this Timing Event Date.")    
+        comodel_name="hc.timing",
+        string="Timing",
+        required="True",
+        help="Timing associated with this Timing Event Date.")
     event_date = fields.Datetime(
-        string="Event Date", 
-        help="Event Date associated with this Timing Event Date.")                
+        string="Event Date",
+        help="Event Date associated with this Timing Event Date.")
+
 
 class TimingRepeatTimeOfDay(models.Model):
     _name = "hc.timing.repeat.time.of.day"
@@ -225,12 +232,13 @@ class TimingRepeatTimeOfDay(models.Model):
     _inherit = ["hc.basic.association"]
 
     repeat_id = fields.Many2one(
-        comodel_name="hc.timing.repeat", 
-        string="Repeat", 
-        help="Repeat associated with this Timing Repeat Time Of Day.")                    
+        comodel_name="hc.timing.repeat",
+        string="Repeat",
+        help="Repeat associated with this Timing Repeat Time Of Day.")
     time_of_day = fields.Float(
-        string="Time Of Day", 
-        help="Time Of Day associated with this Timing Repeat Time Of Day.")                    
+        string="Time Of Day",
+        help="Time Of Day associated with this Timing Repeat Time Of Day.")
+
 
 class TimingAbbreviation(models.Model):
     _name = "hc.vs.timing.abbreviation"
@@ -238,15 +246,16 @@ class TimingAbbreviation(models.Model):
     _inherit = ["hc.value.set.contains"]
 
     name = fields.Char(
-        string="Name", 
-        help="Name of this timing abbreviation.")                 
+        string="Name",
+        help="Name of this timing abbreviation.")
     code = fields.Char(
-        string="Code", 
-        help="Code of this timing abbreviation.")                 
+        string="Code",
+        help="Code of this timing abbreviation.")
     contains_id = fields.Many2one(
-        comodel_name="hc.vs.timing.abbreviation", 
-        string="Parent", 
-        help="Parent timing abbreviation.")                    
+        comodel_name="hc.vs.timing.abbreviation",
+        string="Parent",
+        help="Parent timing abbreviation.")
+
 
 class TimingEvent(models.Model):
     _name = "hc.vs.timing.event"
@@ -254,15 +263,12 @@ class TimingEvent(models.Model):
     _inherit = ["hc.value.set.contains"]
 
     name = fields.Char(
-        string="Name", 
-        help="Name of this timing event.")                    
+        string="Name",
+        help="Name of this timing event.")
     code = fields.Char(
-        string="Code", 
-        help="Code of this timing event.")                    
+        string="Code",
+        help="Code of this timing event.")
     contains_id = fields.Many2one(
-        comodel_name="hc.vs.timing.event", 
-        string="Parent", 
-        help="Parent timing event.")          
-
-
-
+        comodel_name="hc.vs.timing.event",
+        string="Parent",
+        help="Parent timing event.")

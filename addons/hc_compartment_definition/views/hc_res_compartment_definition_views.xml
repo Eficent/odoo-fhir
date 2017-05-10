@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Compartment Definition Action and Menu --> 
-    
-        <act_window id="hc_res_compartment_definition_action"   
+        <!-- Compartment Definition Action and Menu -->
+
+        <act_window id="hc_res_compartment_definition_action"
                     name="HC Compartment Definitions"
                     res_model="hc.res.compartment.definition"
                     view_mode="tree,form"
@@ -11,10 +11,10 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_compartment_definition.menu_compart_defn" 
-                  name="Compartment Definitions" 
-                  parent="hc_base.menu_conf" 
-                  action="hc_res_compartment_definition_action" 
+        <menuitem id="hc_compartment_definition.menu_compart_defn"
+                  name="Compartment Definitions"
+                  parent="hc_base.menu_conf"
+                  action="hc_res_compartment_definition_action"
                   groups="hc_base.group_hc_base_manager" sequence="80"/>
 
     </data>

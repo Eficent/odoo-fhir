@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Activity Definition Action and Menu --> 
-  
-        <act_window id="hc_res_activity_definition_action"  
+        <!-- Activity Definition Action and Menu -->
+
+        <act_window id="hc_res_activity_definition_action"
                     name="HC Activity Definitions"
                     res_model="hc.res.activity.definition"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_activity_definition.menu_act_defn" 
+        <menuitem id="hc_activity_definition.menu_act_defn"
                   name="Activity Definitions"
-                  parent="hc_base.menu_clin_rsn" 
+                  parent="hc_base.menu_clin_rsn"
                   action="hc_res_activity_definition_action"
-                  groups="hc_base.group_hc_base_manager" 
+                  groups="hc_base.group_hc_base_manager"
                   sequence="10"/>
 
     </data>

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcCompartmentDefinition(http.Controller):
 #     @http.route('/hc_compartment_definition/hc_compartment_definition/', auth='public')

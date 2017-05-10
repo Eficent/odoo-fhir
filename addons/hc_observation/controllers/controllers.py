@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcObservation(http.Controller):
 #     @http.route('/hc_observation/hc_observation/', auth='public')

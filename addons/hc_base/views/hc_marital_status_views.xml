@@ -1,6 +1,6 @@
 <openerp>
     <data>
-  
+
         <!-- Marital Status Views -->
 
         <record id="hc_vs_marital_status_view_search" model="ir.ui.view">
@@ -8,9 +8,9 @@
             <field name="model">hc.vs.marital.status</field>
             <field name="arch" type="xml">
                 <search string="Marital Statuses">
-                <field name="name"/>
-                <field name="code"/>
-                <field name="definition"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="definition"/>
                     <group>
                         <filter name="group_by_parent" string="parent" context="{'group_by': 'contains_id'}"/>
                     </group>
@@ -37,7 +37,7 @@
             <field name="name">Marital Status Form</field>
             <field name="model">hc.vs.marital.status</field>
             <field name="arch" type="xml">
-                <form string="Marital Statuses" >
+                <form string="Marital Statuses">
                     <sheet>
                         <h1>
                             <field name="name" default_focus="1" placeholder="Name (e.g., Biological Substance)"/>
@@ -68,11 +68,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_base.menu_mar_stat" 
-                  name="Marital Status" 
-                  parent="hc_base.menu_vs" 
-                  action="hc_vs_marital_status_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_base.menu_mar_stat"
+                  name="Marital Status"
+                  parent="hc_base.menu_vs"
+                  action="hc_vs_marital_status_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="16"/>
 
     </data>

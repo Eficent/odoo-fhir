@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcDocumentManifest(http.Controller):
 #     @http.route('/hc_document_manifest/hc_document_manifest/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcMedia(http.Controller):
 #     @http.route('/hc_media/hc_media/', auth='public')

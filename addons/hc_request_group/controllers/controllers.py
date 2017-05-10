@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcRequestGroup(http.Controller):
 #     @http.route('/hc_request_group/hc_request_group/', auth='public')

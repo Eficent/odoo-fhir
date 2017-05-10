@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcEligibilityRequest(http.Controller):
 #     @http.route('/hc_eligibility_request/hc_eligibility_request/', auth='public')

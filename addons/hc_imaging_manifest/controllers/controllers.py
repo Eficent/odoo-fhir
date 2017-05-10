@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcImagingManifest(http.Controller):
 #     @http.route('/hc_imaging_manifest/hc_imaging_manifest/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcSlot(http.Controller):
 #     @http.route('/hc_slot/hc_slot/', auth='public')

@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Eligibility Response Action and Menu -->   
-    
-        <act_window id="hc_res_eligibility_response_action" 
+        <!-- Eligibility Response Action and Menu -->
+
+        <act_window id="hc_res_eligibility_response_action"
                     name="HC Eligibility Responses"
                     res_model="hc.res.eligibility.response"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_eligibility_response.menu_elig_resp" 
-                  name="Eligibility Responses" 
-                  parent="hc_base.menu_fina_supp" 
-                  action="hc_res_eligibility_response_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_eligibility_response.menu_elig_resp"
+                  name="Eligibility Responses"
+                  parent="hc_base.menu_fina_supp"
+                  action="hc_res_eligibility_response_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="30"/>
 
     </data>

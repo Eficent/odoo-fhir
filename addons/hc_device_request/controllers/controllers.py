@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcDeviceRequest(http.Controller):
 #     @http.route('/hc_device_request/hc_device_request/', auth='public')

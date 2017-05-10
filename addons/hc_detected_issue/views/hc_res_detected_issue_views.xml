@@ -1,23 +1,23 @@
 <openerp>
-  <data>
-    
-    <!-- Detected Issue Action and Menu --> 
-  
-    <act_window id="hc_res_detected_issue_action" 
-                name="HC Detected Issues"
-                res_model="hc.res.detected.issue"
-                view_mode="tree,form"
-                domain=""
-                context=""
-                limit=""/>
+    <data>
 
-    <menuitem id="hc_detected_issue.menu_issue" 
-              name="Detected Issues"
-              web_icon="hc_detected_issue,static/description/icon.png"  
-              parent="hc_base.menu_clinic_gen" 
-              action="hc_res_detected_issue_action" 
-              groups="hc_base.group_hc_base_manager" 
-              sequence="60"/>
+        <!-- Detected Issue Action and Menu -->
 
-  </data>
+        <act_window id="hc_res_detected_issue_action"
+                    name="HC Detected Issues"
+                    res_model="hc.res.detected.issue"
+                    view_mode="tree,form"
+                    domain=""
+                    context=""
+                    limit=""/>
+
+        <menuitem id="hc_detected_issue.menu_issue"
+                  name="Detected Issues"
+                  web_icon="hc_detected_issue,static/description/icon.png"
+                  parent="hc_base.menu_clinic_gen"
+                  action="hc_res_detected_issue_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="60"/>
+
+    </data>
 </openerp>

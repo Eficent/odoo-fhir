@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcValueSet(http.Controller):
 #     @http.route('/hc_value_set/hc_value_set/', auth='public')

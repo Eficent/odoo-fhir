@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Structure Definition Action and Menu -->   
-    
-        <act_window id="hc_res_structure_definition_action" 
+        <!-- Structure Definition Action and Menu -->
+
+        <act_window id="hc_res_structure_definition_action"
                     name="HC Structure Definitions"
                     res_model="hc.res.structure.definition"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_structure_definition.menu_struc_defn" 
-                  name="Structure Definitions" 
-                  parent="hc_base.menu_conf" 
-                  action="hc_res_structure_definition_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_structure_definition.menu_struc_defn"
+                  name="Structure Definitions"
+                  parent="hc_base.menu_conf"
+                  action="hc_res_structure_definition_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="10"/>
 
     </data>

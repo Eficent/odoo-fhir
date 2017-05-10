@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcAdverseEvent(http.Controller):
 #     @http.route('/hc_adverse_event/hc_adverse_event/', auth='public')

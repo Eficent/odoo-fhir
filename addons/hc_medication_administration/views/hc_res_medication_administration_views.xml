@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Medication Administration Action and Menu -->  
-    
-        <act_window id="hc_res_medication_administration_action"    
+        <!-- Medication Administration Action and Menu -->
+
+        <act_window id="hc_res_medication_administration_action"
                     name="HC Medication Administrations"
                     res_model="hc.res.medication.administration"
                     view_mode="tree,form"
@@ -11,12 +11,12 @@
                     context=""
                     limit=""/>
 
-                    <menuitem id="hc_medication_administration.menu_med_admin" 
-                              name="Medication Administration" 
-                              parent="hc_base.menu_med" 
-                              action="hc_res_medication_administration_action" 
-                              groups="hc_base.group_hc_base_manager" 
-                              sequence="30"/>
+        <menuitem id="hc_medication_administration.menu_med_admin"
+                  name="Medication Administration"
+                  parent="hc_base.menu_med"
+                  action="hc_res_medication_administration_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="30"/>
 
 
     </data>

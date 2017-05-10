@@ -1,23 +1,23 @@
 <openerp>
-  <data>
-    
-    <!-- Clinical Impression Action and Menu -->    
-    
-    <act_window id="hc_res_clinical_impression_action"  
-                name="HC Clinical Impressions"
-                res_model="hc.res.clinical.impression"
-                view_mode="tree,form"
-                domain=""
-                context=""
-                limit=""/>
+    <data>
 
-    <menuitem id="hc_clinical_impression.menu_clinic_imp" 
-              name="Clinical Impressions"
-              web_icon="hc_clinical_impression,static/description/icon.png"  
-              parent="hc_base.menu_clinic_gen" 
-              action="hc_res_clinical_impression_action" 
-              groups="hc_base.group_hc_base_manager" 
-              sequence="50"/>
+        <!-- Clinical Impression Action and Menu -->
 
-  </data>
+        <act_window id="hc_res_clinical_impression_action"
+                    name="HC Clinical Impressions"
+                    res_model="hc.res.clinical.impression"
+                    view_mode="tree,form"
+                    domain=""
+                    context=""
+                    limit=""/>
+
+        <menuitem id="hc_clinical_impression.menu_clinic_imp"
+                  name="Clinical Impressions"
+                  web_icon="hc_clinical_impression,static/description/icon.png"
+                  parent="hc_base.menu_clinic_gen"
+                  action="hc_res_clinical_impression_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="50"/>
+
+    </data>
 </openerp>

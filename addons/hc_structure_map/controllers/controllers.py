@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcStructureMap(http.Controller):
 #     @http.route('/hc_structure_map/hc_structure_map/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcImmunizationRecommendation(http.Controller):
 #     @http.route('/hc_immunization_recommendation/hc_immunization_recommendation/', auth='public')

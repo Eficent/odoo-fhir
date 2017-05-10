@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcConsent(http.Controller):
 #     @http.route('/hc_consent/hc_consent/', auth='public')

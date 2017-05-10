@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Care Plan Action and Menu -->  
-    
-        <act_window id="hc_res_care_plan_action"    
+        <!-- Care Plan Action and Menu -->
+
+        <act_window id="hc_res_care_plan_action"
                     name="HC Care Plans"
                     res_model="hc.res.care.plan"
                     view_mode="tree,form"
@@ -11,25 +11,25 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_care_plan.menu_care_plan" 
+        <menuitem id="hc_care_plan.menu_care_plan"
                   name="Care Plans"
-                  web_icon="hc_care_plan,static/description/icon.png" 
-                  parent="hc_base.menu_clinic_care" 
-                  action="hc_res_care_plan_action" 
-                  groups="hc_base.group_hc_base_manager" 
+                  web_icon="hc_care_plan,static/description/icon.png"
+                  parent="hc_base.menu_clinic_care"
+                  action="hc_res_care_plan_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="10"/>
-        
-<!--         <record id="hc_res_procedure_view_form_inherit" model="ir.ui.view">
-            <field name="name">Procedure Form Inherit</field>
-            <field name="model">hc.res.procedure</field>
-            <field name="inherit_id" ref="hc_procedure.hc_res_procedure_view_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='based_on_ids']//form//group//field[@name='based_on_type']" position="after">
-                    <field name="based_on_care_plan_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','care_plan')]}"/>
-                    <field name="based_on_referral_request_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','referral_request')]}"/>
-                </xpath>
-            </field>
-        </record> -->
-    
+
+        <!--         <record id="hc_res_procedure_view_form_inherit" model="ir.ui.view">
+                    <field name="name">Procedure Form Inherit</field>
+                    <field name="model">hc.res.procedure</field>
+                    <field name="inherit_id" ref="hc_procedure.hc_res_procedure_view_form"/>
+                    <field name="arch" type="xml">
+                        <xpath expr="//field[@name='based_on_ids']//form//group//field[@name='based_on_type']" position="after">
+                            <field name="based_on_care_plan_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','care_plan')]}"/>
+                            <field name="based_on_referral_request_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','referral_request')]}"/>
+                        </xpath>
+                    </field>
+                </record> -->
+
     </data>
 </openerp>

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcNamingSystem(http.Controller):
 #     @http.route('/hc_naming_system/hc_naming_system/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcCommunicationRequest(http.Controller):
 #     @http.route('/hc_communication_request/hc_communication_request/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcPaymentNotice(http.Controller):
 #     @http.route('/hc_payment_notice/hc_payment_notice/', auth='public')

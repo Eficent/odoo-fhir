@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Goal Action and Menu -->   
-    
-        <act_window id="hc_res_goal_action" 
+        <!-- Goal Action and Menu -->
+
+        <act_window id="hc_res_goal_action"
                     name="HC Goals"
                     res_model="hc.res.goal"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_goal.menu_goal" 
-                  name="Goals" 
-                  parent="hc_base.menu_clinic_care" 
-                  action="hc_res_goal_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_goal.menu_goal"
+                  name="Goals"
+                  parent="hc_base.menu_clinic_care"
+                  action="hc_res_goal_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="30"/>
 
     </data>

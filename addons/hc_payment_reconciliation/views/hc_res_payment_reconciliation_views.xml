@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Payment Reconciliation Action and Menu --> 
-    
-        <act_window id="hc_res_payment_reconciliation_action"   
+        <!-- Payment Reconciliation Action and Menu -->
+
+        <act_window id="hc_res_payment_reconciliation_action"
                     name="HC Payment Reconciliations"
                     res_model="hc.res.payment.reconciliation"
                     view_mode="tree,form"
@@ -11,10 +11,10 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_payment_reconciliation.menu_pmt_reconc" 
-                  name="Payment Reconciliations" 
-                  parent="hc_base.menu_fina_pmt" 
-                  action="hc_res_payment_reconciliation_action" 
+        <menuitem id="hc_payment_reconciliation.menu_pmt_reconc"
+                  name="Payment Reconciliations"
+                  parent="hc_base.menu_fina_pmt"
+                  action="hc_res_payment_reconciliation_action"
                   groups="hc_base.group_hc_base_manager" sequence="20"/>
 
     </data>

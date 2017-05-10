@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Communication_Request Action and Menu -->  
-  
-        <act_window id="hc_res_communication_request_action"  
+        <!-- Communication_Request Action and Menu -->
+
+        <act_window id="hc_res_communication_request_action"
                     name="HC Communication Requests"
                     res_model="hc.res.communication.request"
                     view_mode="tree,form"
@@ -12,11 +12,11 @@
                     limit=""/>
 
 
-        <menuitem id="hc_communication_request.menu_comm_req" 
-                  name="Communication Requests" 
-                  parent="hc_base.menu_pat_mgt" 
-                  action="hc_res_communication_request_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_communication_request.menu_comm_req"
+                  name="Communication Requests"
+                  parent="hc_base.menu_pat_mgt"
+                  action="hc_res_communication_request_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="60"/>
 
     </data>

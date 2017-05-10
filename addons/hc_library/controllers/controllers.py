@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcLibrary(http.Controller):
 #     @http.route('/hc_library/hc_library/', auth='public')

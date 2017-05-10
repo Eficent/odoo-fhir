@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcNutritionOrder(http.Controller):
 #     @http.route('/hc_nutrition_order/hc_nutrition_order/', auth='public')

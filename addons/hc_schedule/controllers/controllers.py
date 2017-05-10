@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcSchedule(http.Controller):
 #     @http.route('/hc_schedule/hc_schedule/', auth='public')

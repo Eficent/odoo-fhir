@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcPlanDefinition(http.Controller):
 #     @http.route('/hc_plan_definition/hc_plan_definition/', auth='public')

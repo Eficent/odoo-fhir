@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcLocation(http.Controller):
 #     @http.route('/hc_location/hc_location/', auth='public')

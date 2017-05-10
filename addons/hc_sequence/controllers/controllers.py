@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcSequence(http.Controller):
 #     @http.route('/hc_sequence/hc_sequence/', auth='public')

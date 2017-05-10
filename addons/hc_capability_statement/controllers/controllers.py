@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcCapabilityStatement(http.Controller):
 #     @http.route('/hc_capability_statement/hc_capability_statement/', auth='public')

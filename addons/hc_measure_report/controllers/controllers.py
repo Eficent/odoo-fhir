@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcMeasureReport(http.Controller):
 #     @http.route('/hc_measure_report/hc_measure_report/', auth='public')

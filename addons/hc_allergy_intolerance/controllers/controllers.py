@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcAllergyIntolerance(http.Controller):
 #     @http.route('/hc_allergy_intolerance/hc_allergy_intolerance/', auth='public')

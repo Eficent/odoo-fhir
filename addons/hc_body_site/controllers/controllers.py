@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcBodySite(http.Controller):
 #     @http.route('/hc_body_site/hc_body_site/', auth='public')

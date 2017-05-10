@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>      
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
 
-    <!--Timing Abbreviation -->
+        <!--Timing Abbreviation -->
 
         <record id="hc_base.timing_abbr_bid" model="hc.vs.timing.abbreviation">
             <field name="code">BID</field>
@@ -75,6 +75,6 @@
             <field name="source_id" ref="base.hl7fhir"/>
             <field name="system">http://build.fhir.org/valueset-timing-abbreviation.html</field>
         </record>
-    
+
     </data>
 </openerp>

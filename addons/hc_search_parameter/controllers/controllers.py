@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcSearchParameter(http.Controller):
 #     @http.route('/hc_search_parameter/hc_search_parameter/', auth='public')

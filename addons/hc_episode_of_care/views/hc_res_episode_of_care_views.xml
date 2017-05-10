@@ -1,9 +1,9 @@
 <openerp>
-  <data>
-    
-        <!-- Episode Of Care Action and Menu -->    
-    
-        <act_window id="hc_res_episode_of_care_action"  
+    <data>
+
+        <!-- Episode Of Care Action and Menu -->
+
+        <act_window id="hc_res_episode_of_care_action"
                     name="HC Episodes Of Care"
                     res_model="hc.res.episode.of.care"
                     view_mode="tree,form"
@@ -11,12 +11,12 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_episode_of_care.menu_episode" 
-                  name="Episodes of Care" 
-                  parent="hc_base.menu_pat_mgt" 
-                  action="hc_res_episode_of_care_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_episode_of_care.menu_episode"
+                  name="Episodes of Care"
+                  parent="hc_base.menu_pat_mgt"
+                  action="hc_res_episode_of_care_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="20"/>
 
-  </data>
+    </data>
 </openerp>

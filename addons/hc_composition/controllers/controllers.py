@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcComposition(http.Controller):
 #     @http.route('/hc_composition/hc_composition/', auth='public')

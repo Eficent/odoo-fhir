@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcGuidanceResponse(http.Controller):
 #     @http.route('/hc_guidance_response/hc_guidance_response/', auth='public')

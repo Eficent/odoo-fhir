@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcBinary(http.Controller):
 #     @http.route('/hc_binary/hc_binary/', auth='public')

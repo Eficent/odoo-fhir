@@ -1,9 +1,9 @@
 <openerp>
     <data>
 
-        <!-- Eligibility Request Action and Menu -->    
-    
-        <act_window id="hc_res_eligibility_request_action" 
+        <!-- Eligibility Request Action and Menu -->
+
+        <act_window id="hc_res_eligibility_request_action"
                     name="HC Eligibility Requests"
                     res_model="hc.res.eligibility.request"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_eligibility_request.menu_elig_req" 
-                  name="Eligibility Requests" 
-                  parent="hc_base.menu_fina_supp" 
-                  action="hc_res_eligibility_request_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_eligibility_request.menu_elig_req"
+                  name="Eligibility Requests"
+                  parent="hc_base.menu_fina_supp"
+                  action="hc_res_eligibility_request_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="20"/>
 
     </data>

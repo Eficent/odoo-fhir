@@ -1,23 +1,23 @@
 <openerp>
-  <data>
-    
-    <!-- Location Action and Menu -->   
-    
-    <act_window id="hc_res_location_action" 
-                name="HC Locations"
-                res_model="hc.res.location"
-                view_mode="tree,form"
-                domain=""
-                context=""
-                limit=""/>
+    <data>
 
-    <menuitem id="hc_location.menu_loc" 
-              name="Locations"
-              web_icon="hc_location,static/description/icon.png" 
-              parent="hc_base.menu_entity" 
-              action="hc_res_location_action" 
-              groups="hc_base.group_hc_base_manager" 
-              sequence="40"/>
-              
-  </data>
+        <!-- Location Action and Menu -->
+
+        <act_window id="hc_res_location_action"
+                    name="HC Locations"
+                    res_model="hc.res.location"
+                    view_mode="tree,form"
+                    domain=""
+                    context=""
+                    limit=""/>
+
+        <menuitem id="hc_location.menu_loc"
+                  name="Locations"
+                  web_icon="hc_location,static/description/icon.png"
+                  parent="hc_base.menu_entity"
+                  action="hc_res_location_action"
+                  groups="hc_base.group_hc_base_manager"
+                  sequence="40"/>
+
+    </data>
 </openerp>

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcCondition(http.Controller):
 #     @http.route('/hc_condition/hc_condition/', auth='public')

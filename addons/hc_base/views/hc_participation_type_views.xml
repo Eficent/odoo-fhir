@@ -1,82 +1,82 @@
 <openerp>
     <data>
 
-        <!-- Participation Type Views --> 
+        <!-- Participation Type Views -->
 
-        <record id="hc_vs_participation_type_view_search" model="ir.ui.view">           
-            <field name="name">Participation Type Search</field>        
-            <field name="model">hc.vs.participation.type</field>        
-            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_search"/> -->       
-            <field name="arch" type="xml">      
-                <search string="Participation Types">   
+        <record id="hc_vs_participation_type_view_search" model="ir.ui.view">
+            <field name="name">Participation Type Search</field>
+            <field name="model">hc.vs.participation.type</field>
+            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_search"/> -->
+            <field name="arch" type="xml">
+                <search string="Participation Types">
                     <field name="name"/>
                     <field name="code"/>
                     <field name="definition"/>
-                    <group> 
+                    <group>
                         <filter name="group_by_parent" string="parent" context="{'group_by': 'contains_id'}"/>
                     </group>
-                </search>   
-            </field>        
-        </record>           
+                </search>
+            </field>
+        </record>
 
-        <record id="hc_vs_participation_type_view_tree" model="ir.ui.view">         
-            <field name="name">Participation Type Tree</field>      
-            <field name="model">hc.vs.participation.type</field>        
-            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_tree"/>   -->   
-            <field name="arch" type="xml">      
+        <record id="hc_vs_participation_type_view_tree" model="ir.ui.view">
+            <field name="name">Participation Type Tree</field>
+            <field name="model">hc.vs.participation.type</field>
+            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_tree"/>   -->
+            <field name="arch" type="xml">
                 <tree string="Participation Types">
                     <field name="name" string="Participation Type"/>
                     <field name="code"/>
                     <field name="definition"/>
-                </tree> 
-            </field>        
+                </tree>
+            </field>
         </record>
-                  
-        <record id="hc_vs_participation_type_view_form" model="ir.ui.view">           
-            <field name="name">Participation Type Form</field>         
+
+        <record id="hc_vs_participation_type_view_form" model="ir.ui.view">
+            <field name="name">Participation Type Form</field>
             <field name="model">hc.vs.participation.type</field>
-            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_form"/>  -->        
-            <field name="arch" type="xml">          
-                <form string="Participation Types">        
-                    <sheet>     
-                        <div class="oe_title oe_left" colwidth="200">    
-                            <h1>  
+            <!-- <field name="inherit_id" ref="hc_value_set_contains_view_form"/>  -->
+            <field name="arch" type="xml">
+                <form string="Participation Types">
+                    <sheet>
+                        <div class="oe_title oe_left" colwidth="200">
+                            <h1>
                                 <field name="name" default_focus="1" placeholder="Name (e.g., subject)"/>
-                            </h1> 
-                            <field name="code" placeholder="Code (e.g., SBJ)"/> 
+                            </h1>
+                            <field name="code" placeholder="Code (e.g., SBJ)"/>
                         </div>
-                        <field name="definition" placeholder="Definition"/> 
-                        <field name="comments" placeholder="Comments"/>     
-                        <group>   
-                            <group> 
+                        <field name="definition" placeholder="Definition"/>
+                        <field name="comments" placeholder="Comments"/>
+                        <group>
+                            <group>
                                 <field name="contains_id"/>
                                 <field name="is_abstract" widget="upgrade_boolean"/>
                                 <field name="level" placeholder="An integer (e.g., 1, 2)"/>
                                 <field name="version" placeholder="e.g., v2.5"/>
-                            </group>  
-                            <group> 
+                            </group>
+                            <group>
                                 <field name="source_id" placeholder="e.g., U.S. Census Bureau"/>
                                 <field name="system" widget="url" placeholder="e.g., www.census.gov/"/>
-                            </group>  
-                        </group>    
-                    </sheet>      
-                </form>       
-            </field>          
-        </record>           
-                  
-        <!-- Participation Type Action and Menu -->           
-                  
-        <record id="hc_vs_participation_type_action" model="ir.actions.act_window"> 
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Participation Type Action and Menu -->
+
+        <record id="hc_vs_participation_type_action" model="ir.actions.act_window">
             <field name="name">HC Participation Types</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hc.vs.participation.type</field>
             <!-- <field name="inherit_id" ref="hc_value_set_contains_action"/> -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-        </record>   
-        
-        <menuitem id="hc_base.menu_vs_partic" 
-                  name="Participation Types" 
+        </record>
+
+        <menuitem id="hc_base.menu_vs_partic"
+                  name="Participation Types"
                   parent="hc_base.menu_vs"
                   action="hc_vs_participation_type_action"
                   groups="group_hc_base_manager"

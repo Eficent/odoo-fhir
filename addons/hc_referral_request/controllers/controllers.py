@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcReferralRequest(http.Controller):
 #     @http.route('/hc_referral_request/hc_referral_request/', auth='public')

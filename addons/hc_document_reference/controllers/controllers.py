@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcDocumentReference(http.Controller):
 #     @http.route('/hc_document_reference/hc_document_reference/', auth='public')

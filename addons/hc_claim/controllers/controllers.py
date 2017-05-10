@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcClaim(http.Controller):
 #     @http.route('/hc_claim/hc_claim/', auth='public')

@@ -1,11 +1,10 @@
 <openerp>
     <data>
-    
-        <!-- Diagnostic Report Action and Menu -->  
-  
-        
 
-        <act_window id="hc_res_diagnostic_report_action"  
+        <!-- Diagnostic Report Action and Menu -->
+
+
+        <act_window id="hc_res_diagnostic_report_action"
                     name="HC Diagnostic Reports"
                     res_model="hc.res.diagnostic.report"
                     view_mode="tree,form"
@@ -13,12 +12,12 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_diagnostic_report.menu_diag_rpt" 
+        <menuitem id="hc_diagnostic_report.menu_diag_rpt"
                   name="Diagnostic Reports"
-                  web_icon="hc_diagnostic_report,static/description/icon.png"   
-                  parent="hc_base.menu_clinic_diag" 
-                  action="hc_res_diagnostic_report_action" 
-                  groups="hc_base.group_hc_base_manager" 
+                  web_icon="hc_diagnostic_report,static/description/icon.png"
+                  parent="hc_base.menu_clinic_diag"
+                  action="hc_res_diagnostic_report_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="20"/>
 
         <record id="hc_res_procedure_view_form" model="ir.ui.view">
@@ -27,8 +26,10 @@
             <field name="inherit_id" ref="hc_procedure.hc_res_procedure_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='based_on_ids']//form//group//field[@name='based_on_type']" position="after">
-                    <field name="based_on_care_plan_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','care_plan')]}"/>
-                    <field name="based_on_referral_request_id" class="oe_edit_only" attrs="{'invisible': [('based_on_type','!=','referral_request')]}"/>
+                    <field name="based_on_care_plan_id" class="oe_edit_only"
+                           attrs="{'invisible': [('based_on_type','!=','care_plan')]}"/>
+                    <field name="based_on_referral_request_id" class="oe_edit_only"
+                           attrs="{'invisible': [('based_on_type','!=','referral_request')]}"/>
                 </xpath>
                 <!-- <xpath expr="//field[@name='report_ids']" position="after">
                     <tree>                      

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcGraphDefinition(http.Controller):
 #     @http.route('/hc_graph_definition/hc_graph_definition/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcVisionPrescription(http.Controller):
 #     @http.route('/hc_vision_prescription/hc_vision_prescription/', auth='public')

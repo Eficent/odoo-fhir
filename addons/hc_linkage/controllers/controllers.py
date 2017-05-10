@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcLinkage(http.Controller):
 #     @http.route('/hc_linkage/hc_linkage/', auth='public')

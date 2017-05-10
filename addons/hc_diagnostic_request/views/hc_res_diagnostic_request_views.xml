@@ -1,9 +1,9 @@
 <openerp>
     <data>
-   
-        <!-- Diagnostic Request Action and Menu --> 
-    
-        <act_window id="hc_res_diagnostic_request_action"   
+
+        <!-- Diagnostic Request Action and Menu -->
+
+        <act_window id="hc_res_diagnostic_request_action"
                     name="HC Diagnostic Requests"
                     res_model="hc.res.diagnostic.request"
                     view_mode="tree,form"
@@ -11,13 +11,13 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_diagnostic_request.menu_diag_req" 
+        <menuitem id="hc_diagnostic_request.menu_diag_req"
                   name="Diagnostic Requests"
-                  web_icon="hc_diagnostic_request,static/description/icon.png"   
-                  parent="hc_base.menu_clinic_diag" 
-                  action="hc_res_diagnostic_request_action" 
-                  groups="hc_base.group_hc_base_manager" 
+                  web_icon="hc_diagnostic_request,static/description/icon.png"
+                  parent="hc_base.menu_clinic_diag"
+                  action="hc_res_diagnostic_request_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="30"/>
-                  
+
     </data>
 </openerp>

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcRiskAssessment(http.Controller):
 #     @http.route('/hc_risk_assessment/hc_risk_assessment/', auth='public')

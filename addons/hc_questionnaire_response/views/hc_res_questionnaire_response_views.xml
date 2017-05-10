@@ -1,9 +1,9 @@
 <openerp>
     <data>
-      
-        <!-- Questionnaire Response Action and Menu --> 
-    
-        <act_window id="hc_res_questionnaire_response_action"   
+
+        <!-- Questionnaire Response Action and Menu -->
+
+        <act_window id="hc_res_questionnaire_response_action"
                     name="HC Questionnaire Responses"
                     res_model="hc.res.questionnaire.response"
                     view_mode="tree,form"
@@ -11,11 +11,11 @@
                     context=""
                     limit=""/>
 
-        <menuitem id="hc_questionnaire_response.menu_quest_resp" 
-                  name="Questionnaire Responses" 
-                  parent="hc_base.menu_doc_quest" 
-                  action="hc_res_questionnaire_response_action" 
-                  groups="hc_base.group_hc_base_manager" 
+        <menuitem id="hc_questionnaire_response.menu_quest_resp"
+                  name="Questionnaire Responses"
+                  parent="hc_base.menu_doc_quest"
+                  action="hc_res_questionnaire_response_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="20"/>
 
     </data>

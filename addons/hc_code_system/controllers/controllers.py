@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcCodeSystem(http.Controller):
 #     @http.route('/hc_code_system/hc_code_system/', auth='public')

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import http
 
 # class HcExpansionProfile(http.Controller):
 #     @http.route('/hc_expansion_profile/hc_expansion_profile/', auth='public')

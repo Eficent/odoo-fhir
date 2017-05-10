@@ -1,22 +1,22 @@
 <openerp>
     <data>
-    
-        <!-- Family Member History Action and Menu -->  
-    
-        <act_window id="hc_res_family_member_history_action"    
+
+        <!-- Family Member History Action and Menu -->
+
+        <act_window id="hc_res_family_member_history_action"
                     name="HC Family Member Histories"
                     res_model="hc.res.family.member.history"
                     view_mode="tree,form"
                     domain=""
                     context=""
                     limit=""/>
-                
-        <menuitem id="hc_family_member_history.menu_fam_hist" 
+
+        <menuitem id="hc_family_member_history.menu_fam_hist"
                   name="Family Member Histories"
-                  web_icon="hc_family_member_history,static/description/icon.png"   
-                  parent="hc_base.menu_clinic_gen" 
-                  action="hc_res_family_member_history_action" 
-                  groups="hc_base.group_hc_base_manager" 
+                  web_icon="hc_family_member_history,static/description/icon.png"
+                  parent="hc_base.menu_clinic_gen"
+                  action="hc_res_family_member_history_action"
+                  groups="hc_base.group_hc_base_manager"
                   sequence="40"/>
 
     </data>

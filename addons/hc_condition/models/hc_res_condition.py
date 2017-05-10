@@ -1,89 +1,92 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, fields, api
 from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
-class Condition(models.Model):    
-    _name = "hc.res.condition"    
-    _description = "Condition"            
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+
+from odoo import models, fields, api
+
+
+class Condition(models.Model):
+    _name = "hc.res.condition"
+    _description = "Condition"
 
     name = fields.Char(
-        string="Event Name", 
-        compute="_compute_name", 
-        store="True", 
+        string="Event Name",
+        compute="_compute_name",
+        store="True",
         help="Text representation of the condition event. Subject Name + Condition + Asserted Date.")
     identifier_ids = fields.One2many(
-        comodel_name="hc.condition.identifier", 
-        inverse_name="condition_id", 
-        string="Identifiers", 
-        help="External Ids for this condition.")                    
+        comodel_name="hc.condition.identifier",
+        inverse_name="condition_id",
+        string="Identifiers",
+        help="External Ids for this condition.")
     clinical_status = fields.Selection(
         string="Clinical Status",
         selection=[
-            ("active", "Active"), 
-            ("recurrence", "Recurrence"), 
-            ("inactive", "Inactive"), 
-            ("remission", "Remission"), 
+            ("active", "Active"),
+            ("recurrence", "Recurrence"),
+            ("inactive", "Inactive"),
+            ("remission", "Remission"),
             ("resolved", "Resolved")],
         default="active",
-        help="The clinical status of the condition.")                    
+        help="The clinical status of the condition.")
     verification_status = fields.Selection(
-        string="Verification Status", 
-        required="True", 
+        string="Verification Status",
+        required="True",
         selection=[
-            ("provisional", "Provisional"), 
-            ("differential", "Differential"), 
-            ("confirmed", "Confirmed"), 
-            ("refuted", "Refuted"), 
-            ("entered-in-error", "Entered-In-Error"), 
+            ("provisional", "Provisional"),
+            ("differential", "Differential"),
+            ("confirmed", "Confirmed"),
+            ("refuted", "Refuted"),
+            ("entered-in-error", "Entered-In-Error"),
             ("unknown", "Unknown")],
-        default="provisional", 
-        help="The verification status to support the clinical status of the condition.")                    
+        default="provisional",
+        help="The verification status to support the clinical status of the condition.")
     category_ids = fields.Many2many(
-        comodel_name="hc.vs.condition.category", 
+        comodel_name="hc.vs.condition.category",
         # relation="condition_category_rel", 
-        string="Categories", 
-        help="A category assigned to the condition.")              
+        string="Categories",
+        help="A category assigned to the condition.")
     severity_id = fields.Many2one(
-        comodel_name="hc.vs.condition.severity", 
-        string="Severity", 
-        help="A category assigned to the condition.")                    
+        comodel_name="hc.vs.condition.severity",
+        string="Severity",
+        help="A category assigned to the condition.")
     code_id = fields.Many2one(
-        comodel_name="hc.vs.condition.code", 
-        string="Condition", 
-        required="True", 
-        help="Condition, problem or diagnosis.")                       
+        comodel_name="hc.vs.condition.code",
+        string="Condition",
+        required="True",
+        help="Condition, problem or diagnosis.")
     code = fields.Char(
-        string="Code", 
-        related="code_id.code", 
+        string="Code",
+        related="code_id.code",
         help="Identification of the condition, problem or diagnosis.")
     body_site_ids = fields.Many2many(
-        comodel_name="hc.vs.body.site", 
-        relation="condition_body_site_rel", 
-        string="Body Sites", 
-        help="Anatomical location, if relevant.")              
+        comodel_name="hc.vs.body.site",
+        relation="condition_body_site_rel",
+        string="Body Sites",
+        help="Anatomical location, if relevant.")
     subject_type = fields.Selection(
         string="Subject Type",
-        required="True", 
+        required="True",
         selection=[
-            ("patient", "Patient"), 
-            ("group", "Group")], 
+            ("patient", "Patient"),
+            ("group", "Group")],
         help="Type of who has the condition.")
     subject_name = fields.Char(
-        string="Subject", 
-        compute="_compute_subject_name", 
-        store="True", 
-        help="Who has the condition?")             
+        string="Subject",
+        compute="_compute_subject_name",
+        store="True",
+        help="Who has the condition?")
     subject_patient_id = fields.Many2one(
-        comodel_name="hc.res.patient", 
-        string="Subject Patient", 
-        help="Patient who has the condition.")                    
+        comodel_name="hc.res.patient",
+        string="Subject Patient",
+        help="Patient who has the condition.")
     subject_group_id = fields.Many2one(
-        comodel_name="hc.res.group", 
-        string="Subject Group", 
-        help="Group who has the condition.")                
+        comodel_name="hc.res.group",
+        string="Subject Group",
+        help="Group who has the condition.")
     # context_type = fields.Selection(
     #     string="Context Type",
     #     selection=[
@@ -106,167 +109,169 @@ class Condition(models.Model):
     onset_type = fields.Selection(
         string="Onset Type",
         selection=[
-            ("date_time", "Date Time"), 
-            ("age", "Age"), 
-            ("period", "Period"), 
-            ("range", "Range"), 
-            ("string", "String")], 
+            ("date_time", "Date Time"),
+            ("age", "Age"),
+            ("period", "Period"),
+            ("range", "Range"),
+            ("string", "String")],
         help="Type of onset.")
     onset_name = fields.Char(
-        string="Onset", 
+        string="Onset",
         compute="_compute_onset_name",
-        store="True", 
-        help="Estimated or actual date, date-time, or age.")             
+        store="True",
+        help="Estimated or actual date, date-time, or age.")
     onset_date_time = fields.Datetime(
-        string="Onset Date Time", 
-        help="Estimated or actual date, date-time, or age.")                    
+        string="Onset Date Time",
+        help="Estimated or actual date, date-time, or age.")
     onset_age = fields.Integer(
-        string="Onset Age", 
-        size=3, 
+        string="Onset Age",
+        size=3,
         help="Estimated or actual date, date-time, or age.")
     onset_age_uom_id = fields.Many2one(
-        comodel_name="product.uom", 
-        string="Onset Age UOM", 
-        domain="[('category_id','=','Time (UCUM)')]", 
-        default="a", 
+        comodel_name="product.uom",
+        string="Onset Age UOM",
+        domain="[('category_id','=','Time (UCUM)')]",
+        default="a",
         help="Onset age unit of measure.")
     onset_start_date = fields.Datetime(
-        string="Onset Start Date", 
-        help="Start of the estimated or actual date, date-time, or age.")                    
+        string="Onset Start Date",
+        help="Start of the estimated or actual date, date-time, or age.")
     onset_end_date = fields.Datetime(
-        string="Onset End Date", 
-        help="End of the estimated or actual date, date-time, or age.")                    
+        string="Onset End Date",
+        help="End of the estimated or actual date, date-time, or age.")
     onset_range_low = fields.Float(
-        string="Onset Range Low", 
-        help="Low limit of estimated or actual date, date-time, or age.")                    
+        string="Onset Range Low",
+        help="Low limit of estimated or actual date, date-time, or age.")
     onset_range_high = fields.Float(
-        string="Onset Range High", 
+        string="Onset Range High",
         help="High limit of estimated or actual date, date-time, or age.")
     onset_string = fields.Char(
-        string="Onset String", 
-        help="String of estimated or actual date, date-time, or age.")                      
+        string="Onset String",
+        help="String of estimated or actual date, date-time, or age.")
     abatement_type = fields.Selection(
         string="Abatement Type",
         selection=[
-            ("date", "Date"), 
-            ("age", "Age"), 
-            ("boolean", "Boolean"), 
-            ("period", "Period"), 
-            ("range", "Range"), 
-            ("string", "String")], 
-        help="Type of abatement.")                    
+            ("date", "Date"),
+            ("age", "Age"),
+            ("boolean", "Boolean"),
+            ("period", "Period"),
+            ("range", "Range"),
+            ("string", "String")],
+        help="Type of abatement.")
     abatement_name = fields.Char(
-        string="Abatement", 
+        string="Abatement",
         compute="_compute_abatement_name",
-        store="True", 
-        help="If/when in resolution/remission .")                   
+        store="True",
+        help="If/when in resolution/remission .")
     abatement_date = fields.Date(
-        string="Abatement Date", 
-        help="date if/when in resolution/remission.")                    
+        string="Abatement Date",
+        help="date if/when in resolution/remission.")
     abatement_age = fields.Integer(
-        string="Abatement Age", 
-        size=3, 
-        help="If/when in resolution/remission.")                    
+        string="Abatement Age",
+        size=3,
+        help="If/when in resolution/remission.")
     abatement_age_uom_id = fields.Many2one(
-        comodel_name="product.uom", 
-        string="Abatement Age UOM", 
-        domain="[('category_id','=','Time (UCUM)')]", 
-        default="a", 
+        comodel_name="product.uom",
+        string="Abatement Age UOM",
+        domain="[('category_id','=','Time (UCUM)')]",
+        default="a",
         help="Abatement age unit of measure.")
     abatement_boolean = fields.Boolean(
-        string="Abatement Boolean", 
-        help="Boolean of if/when in resolution/remission.")                    
+        string="Abatement Boolean",
+        help="Boolean of if/when in resolution/remission.")
     abatement_start_date = fields.Datetime(
-        string="Abatement Start Date", 
+        string="Abatement Start Date",
         help="Start of period of the if/when in resolution/remission.")
     abatement_end_date = fields.Datetime(
-        string="Abatement End Date", 
-        help="End of period of the if/when in resolution/remission.")                 
+        string="Abatement End Date",
+        help="End of period of the if/when in resolution/remission.")
     abatement_range_low = fields.Float(
-        string="Abatement Range Low", 
-        help="Low limit of if/when in resolution/remission.")                    
+        string="Abatement Range Low",
+        help="Low limit of if/when in resolution/remission.")
     abatement_range_high = fields.Float(
-        string="Abatement Range High", 
-        help="High limit of if/when in resolution/remission.")                    
+        string="Abatement Range High",
+        help="High limit of if/when in resolution/remission.")
     abatement_string = fields.Char(
-        string="Abatement String", 
-        help="String of if/when in resolution/remission.")                    
+        string="Abatement String",
+        help="String of if/when in resolution/remission.")
     asserted_date = fields.Datetime(
         string="Asserted Date",
-        required="True", 
-        help="Date record was believed accurate.")                  
+        required="True",
+        help="Date record was believed accurate.")
     asserter_type = fields.Selection(
         string="Asserter Type",
         selection=[
-            ("practitioner", "Practitioner"), 
+            ("practitioner", "Practitioner"),
             ("patient", "Patient"),
-            ("related_person", "Related Person")], 
-        help="Type of asserter.")                    
+            ("related_person", "Related Person")],
+        help="Type of asserter.")
     asserter_name = fields.Char(
-        string="Asserter", 
+        string="Asserter",
         compute="_compute_asserter_name",
-        store="True",  
-        help="Person who asserts this condition.")                  
+        store="True",
+        help="Person who asserts this condition.")
     asserter_practitioner_id = fields.Many2one(
-        comodel_name="hc.res.practitioner", 
-        string="Asserter Practitioner", 
-        help="Practitioner who asserts this condition.")                    
+        comodel_name="hc.res.practitioner",
+        string="Asserter Practitioner",
+        help="Practitioner who asserts this condition.")
     asserter_patient_id = fields.Many2one(
-        comodel_name="hc.res.patient", 
-        string="Asserter Patient", 
-        help="Patient who asserts this condition.")                    
+        comodel_name="hc.res.patient",
+        string="Asserter Patient",
+        help="Patient who asserts this condition.")
     asserter_related_person_id = fields.Many2one(
-        comodel_name="hc.res.related.person", 
-        string="Asserter Related Person", 
+        comodel_name="hc.res.related.person",
+        string="Asserter Related Person",
         help="Related Person who asserts this condition.")
     note_ids = fields.One2many(
-        comodel_name="hc.condition.note", 
-        inverse_name="condition_id", 
-        string="Notes", 
-        help="Additional information about the Condition.")                    
+        comodel_name="hc.condition.note",
+        inverse_name="condition_id",
+        string="Notes",
+        help="Additional information about the Condition.")
     has_stage = fields.Boolean(
-        string="Stage", 
+        string="Stage",
         help="Condition has stage.")
     stage_summary_id = fields.Many2one(
-        comodel_name="hc.vs.condition.stage", 
-        string="Stage Summary", 
+        comodel_name="hc.vs.condition.stage",
+        string="Stage Summary",
         help="Simple summary (disease specific).")
     stage_assessment_ids = fields.One2many(
-        comodel_name="hc.condition.stage.assessment", 
-        inverse_name="condition_id", 
-        string="Stage Assessments", 
-        help="Formal record of assessment.")              
+        comodel_name="hc.condition.stage.assessment",
+        inverse_name="condition_id",
+        string="Stage Assessments",
+        help="Formal record of assessment.")
     evidence_ids = fields.One2many(
-        comodel_name="hc.condition.evidence", 
-        inverse_name="condition_id", 
-        string="Evidence", 
-        help="Supporting evidence.")                    
+        comodel_name="hc.condition.evidence",
+        inverse_name="condition_id",
+        string="Evidence",
+        help="Supporting evidence.")
 
-    @api.one                
-    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'asserted_date')              
-    def _compute_name(self):                
-        comp_name = '/'         
+    @api.one
+    @api.depends('subject_patient_id', 'subject_group_id', 'code_id', 'asserted_date')
+    def _compute_name(self):
+        comp_name = '/'
         for hc_res_condition in self:
-            if hc_res_condition.subject_type == 'patient':           
-                comp_name = hc_res_condition.subject_patient_id.name    
-                if hc_res_condition.subject_patient_id.birth_date:  
-                    subject_patient_birth_date = datetime.strftime(datetime.strptime(hc_res_condition.subject_patient_id.birth_date, DF), "%Y-%m-%d")
-                    comp_name = comp_name + "("+ subject_patient_birth_date + ")"
+            if hc_res_condition.subject_type == 'patient':
+                comp_name = hc_res_condition.subject_patient_id.name
+                if hc_res_condition.subject_patient_id.birth_date:
+                    subject_patient_birth_date = datetime.strftime(
+                        datetime.strptime(hc_res_condition.subject_patient_id.birth_date, DF), "%Y-%m-%d")
+                    comp_name = comp_name + "(" + subject_patient_birth_date + ")"
             if hc_res_condition.subject_type == 'group':
-                    comp_name = hc_res_condition.subject_group_id.name            
-            if hc_res_condition.code_id:        
-                comp_name = comp_name + ", " + hc_res_condition.code_id.name or ''   
-            if hc_res_condition.asserted_date:      
-                patient_asserted_date = datetime.strftime(datetime.strptime(hc_res_condition.asserted_date, DTF), "%Y-%m-%d")   
-                comp_name = comp_name + " " + patient_asserted_date 
-            hc_res_condition.name = comp_name       
-          
-    @api.depends('subject_type')          
-    def _compute_subject_name(self):            
-        for hc_res_condition in self:       
-            if hc_res_condition.subject_type == 'patient':  
+                comp_name = hc_res_condition.subject_group_id.name
+            if hc_res_condition.code_id:
+                comp_name = comp_name + ", " + hc_res_condition.code_id.name or ''
+            if hc_res_condition.asserted_date:
+                patient_asserted_date = datetime.strftime(datetime.strptime(hc_res_condition.asserted_date, DTF),
+                                                          "%Y-%m-%d")
+                comp_name = comp_name + " " + patient_asserted_date
+            hc_res_condition.name = comp_name
+
+    @api.depends('subject_type')
+    def _compute_subject_name(self):
+        for hc_res_condition in self:
+            if hc_res_condition.subject_type == 'patient':
                 hc_res_condition.subject_name = hc_res_condition.subject_patient_id.name
-            elif hc_res_condition.subject_type == 'group':  
+            elif hc_res_condition.subject_type == 'group':
                 hc_res_condition.subject_name = hc_res_condition.subject_group_id.name
 
     # @api.multi          
@@ -277,96 +282,105 @@ class Condition(models.Model):
     #         elif hc_res_condition.context_type == 'episode_of_care':  
     #             hc_res_condition.context_name = hc_res_condition.context_episode_of_care_id.name
 
-      
-    @api.depends('onset_type')          
-    def _compute_onset_name(self):          
-        for hc_res_condition in self:       
-            if hc_res_condition.onset_type == 'date':   
+
+    @api.depends('onset_type')
+    def _compute_onset_name(self):
+        for hc_res_condition in self:
+            if hc_res_condition.onset_type == 'date':
                 hc_res_condition.onset_name = str(hc_res_condition.onset_date)
-            elif hc_res_condition.onset_type == 'age':  
-                hc_res_condition.onset_name = str(hc_res_condition.onset_age) + " " + str(hc_res_condition.onset_age_uom_id.name) + "s old"
-            elif hc_res_condition.onset_type == 'period':  
-                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_start_date) + " and " + str(hc_res_condition.onset_end_date)
-            elif hc_res_condition.onset_type == 'range':    
-                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_range_low) + " and " + str(hc_res_condition.onset_range_high)
+            elif hc_res_condition.onset_type == 'age':
+                hc_res_condition.onset_name = str(hc_res_condition.onset_age) + " " + str(
+                    hc_res_condition.onset_age_uom_id.name) + "s old"
+            elif hc_res_condition.onset_type == 'period':
+                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_start_date) + " and " + str(
+                    hc_res_condition.onset_end_date)
+            elif hc_res_condition.onset_type == 'range':
+                hc_res_condition.onset_name = "Between " + str(hc_res_condition.onset_range_low) + " and " + str(
+                    hc_res_condition.onset_range_high)
             elif hc_res_condition.onset_type == 'string':
                 hc_res_condition.onset_name = hc_res_condition.onset_string
 
-    @api.depends('abatement_type')          
-    def _compute_abatement_name(self):          
-        for hc_res_condition in self:       
-            if hc_res_condition.abatement_type == 'date':   
+    @api.depends('abatement_type')
+    def _compute_abatement_name(self):
+        for hc_res_condition in self:
+            if hc_res_condition.abatement_type == 'date':
                 hc_res_condition.abatement_name = str(hc_res_condition.abatement_date)
-            elif hc_res_condition.abatement_type == 'age':  
-                hc_res_condition.abatement_name = str(hc_res_condition.abatement_age) + " " + str(hc_res_condition.abatement_age_uom_id.name) + "s old"
-            elif hc_res_condition.abatement_type == 'boolean':  
+            elif hc_res_condition.abatement_type == 'age':
+                hc_res_condition.abatement_name = str(hc_res_condition.abatement_age) + " " + str(
+                    hc_res_condition.abatement_age_uom_id.name) + "s old"
+            elif hc_res_condition.abatement_type == 'boolean':
                 hc_res_condition.abatement_name = hc_res_condition.abatement_boolean
-            elif hc_res_condition.abatement_type == 'period':   
-                hc_res_condition.abatement_name = "Between " + str(hc_res_condition.abatement_start_date) + " and " + str(hc_res_condition.abatement_end_date)
-            elif hc_res_condition.abatement_type == 'range':    
-                hc_res_condition.abatement_name = "Between " + str(hc_res_condition.abatement_range_low) + " and " + str(hc_res_condition.abatement_range_high)
-            elif hc_res_condition.abatement_type == 'string':   
+            elif hc_res_condition.abatement_type == 'period':
+                hc_res_condition.abatement_name = "Between " + str(
+                    hc_res_condition.abatement_start_date) + " and " + str(hc_res_condition.abatement_end_date)
+            elif hc_res_condition.abatement_type == 'range':
+                hc_res_condition.abatement_name = "Between " + str(
+                    hc_res_condition.abatement_range_low) + " and " + str(hc_res_condition.abatement_range_high)
+            elif hc_res_condition.abatement_type == 'string':
                 hc_res_condition.abatement_name = hc_res_condition.abatement_string
 
-    @api.depends('asserter_type')           
-    def _compute_asserter_name(self):           
-        for hc_res_condition in self:       
-            if hc_res_condition.asserter_type == 'practitioner':    
+    @api.depends('asserter_type')
+    def _compute_asserter_name(self):
+        for hc_res_condition in self:
+            if hc_res_condition.asserter_type == 'practitioner':
                 hc_res_condition.asserter_name = hc_res_condition.asserter_practitioner_id.name
-            elif hc_res_condition.asserter_type == 'patient':   
+            elif hc_res_condition.asserter_type == 'patient':
                 hc_res_condition.asserter_name = hc_res_condition.asserter_patient_id.name
-            elif hc_res_condition.asserter_type == 'related_person':   
-                hc_res_condition.asserter_name = hc_res_condition.asserter_related_person_id.name                 
+            elif hc_res_condition.asserter_type == 'related_person':
+                hc_res_condition.asserter_name = hc_res_condition.asserter_related_person_id.name
 
-class ConditionEvidence(models.Model):    
-    _name = "hc.condition.evidence"    
-    _description = "Condition Evidence"        
+
+class ConditionEvidence(models.Model):
+    _name = "hc.condition.evidence"
+    _description = "Condition Evidence"
 
     condition_id = fields.Many2one(
-        comodel_name="hc.res.condition", 
-        string="Condition", 
-        help="Condition associated with this Condition Evidence.")                    
+        comodel_name="hc.res.condition",
+        string="Condition",
+        help="Condition associated with this Condition Evidence.")
     detail_ids = fields.One2many(
-        comodel_name="hc.condition.evidence.detail", 
-        inverse_name="evidence_id", 
-        string="Details", 
-        help="Supporting information found elsewhere.")                    
+        comodel_name="hc.condition.evidence.detail",
+        inverse_name="evidence_id",
+        string="Details",
+        help="Supporting information found elsewhere.")
     code_id = fields.Many2one(
-        comodel_name="hc.vs.condition.evidence.code", 
-        string="Code", 
-        help="Manifestation/symptom.")                    
+        comodel_name="hc.vs.condition.evidence.code",
+        string="Code",
+        help="Manifestation/symptom.")
 
-class ConditionIdentifier(models.Model):    
-    _name = "hc.condition.identifier"    
-    _description = "Condition Identifier"        
-    _inherit = ["hc.basic.association", "hc.identifier"]    
 
-    condition_id = fields.Many2one(
-        comodel_name="hc.res.condition", 
-        string="Condition", 
-        help="Condition associated with this Condition Identifier.")                                  
-
-class ConditionStageAssessment(models.Model):    
-    _name = "hc.condition.stage.assessment"    
-    _description = "Condition Stage Assessment"        
-    _inherit = ["hc.basic.association"]    
+class ConditionIdentifier(models.Model):
+    _name = "hc.condition.identifier"
+    _description = "Condition Identifier"
+    _inherit = ["hc.basic.association", "hc.identifier"]
 
     condition_id = fields.Many2one(
-        comodel_name="hc.res.condition", 
-        string="Condition", 
-        help="Condition associated with this Condition Stage Assessment.")                    
+        comodel_name="hc.res.condition",
+        string="Condition",
+        help="Condition associated with this Condition Identifier.")
+
+
+class ConditionStageAssessment(models.Model):
+    _name = "hc.condition.stage.assessment"
+    _description = "Condition Stage Assessment"
+    _inherit = ["hc.basic.association"]
+
+    condition_id = fields.Many2one(
+        comodel_name="hc.res.condition",
+        string="Condition",
+        help="Condition associated with this Condition Stage Assessment.")
     stage_assessment_type = fields.Selection(
-        string="Stage Assessment Type", 
+        string="Stage Assessment Type",
         selection=[
-            ("clinical_impression", "Clinical Impression"), 
-            ("diagnostic_report", "Diagnostic Report"), 
-            ("observation", "Observation")], 
-        help="Type of assessment.")                    
+            ("clinical_impression", "Clinical Impression"),
+            ("diagnostic_report", "Diagnostic Report"),
+            ("observation", "Observation")],
+        help="Type of assessment.")
     stage_assessment_name = fields.Char(
-        string="Stage Assessment", 
+        string="Stage Assessment",
         # compute="_compute_stage_assessment_name",
         # store="True",  
-        help="Formal record of assessment.")                   
+        help="Formal record of assessment.")
     # stage_assessment_clinical_impression_id = fields.Many2one(
     #     comodel_name="hc.res.clinical.impression", 
     #     string="Assessment Clinical Impressions", 
@@ -387,18 +401,19 @@ class ConditionStageAssessment(models.Model):
     #             hc_condition_stage_assessment.stage_assessment_name = hc_condition_stage_assessment.stage_assessment_clinical_impression_id.name
     #         elif hc_condition_stage_assessment.stage_assessment_type == 'observation': 
     #             hc_condition_stage_assessment.stage_assessment_name = hc_condition_stage_assessment.stage_assessment_observation_id.name
-            # elif hc_condition_stage_assessment.stage_assessment_type == 'diagnostic_report':   
-            #     hc_condition_stage_assessment.stage_assessment_name = hc_condition_stage_assessment.stage_assessment_diagnostic_report_id.name
-            
-class ConditionEvidenceDetail(models.Model):    
-    _name = "hc.condition.evidence.detail"    
-    _description = "Condition Evidence Detail"        
-    _inherit = ["hc.basic.association"]    
+    # elif hc_condition_stage_assessment.stage_assessment_type == 'diagnostic_report':
+    #     hc_condition_stage_assessment.stage_assessment_name = hc_condition_stage_assessment.stage_assessment_diagnostic_report_id.name
+
+
+class ConditionEvidenceDetail(models.Model):
+    _name = "hc.condition.evidence.detail"
+    _description = "Condition Evidence Detail"
+    _inherit = ["hc.basic.association"]
 
     evidence_id = fields.Many2one(
-        comodel_name="hc.condition.evidence", 
-        string="Evidence", 
-        help="Evidence associated with this Condition Evidence Detail.")                    
+        comodel_name="hc.condition.evidence",
+        string="Evidence",
+        help="Evidence associated with this Condition Evidence Detail.")
     # reference_model = fields.Reference(
     #     string="Reference Model",
     #     selection="_reference_models")
@@ -412,6 +427,7 @@ class ConditionEvidenceDetail(models.Model):
         # compute="_compute_detail_name",
         # store="True", 
         help="Supporting information found elsewhere.")
+
     # detail_string = fields.Char(
     #     string="Detail String", 
     #     help="String of supporting information found elsewhere.")
@@ -419,13 +435,13 @@ class ConditionEvidenceDetail(models.Model):
     #     comodel_name="hc.vs.resource.type", 
     #     string="Detail Code", 
     #     help="Code of supporting information found elsewhere.")
-                 
+
     @api.model
     def _reference_models(self):
-        #type manual is used to display custom models only
+        # type manual is used to display custom models only
         models = self.env['ir.model'].search([('state', '!=', 'manual')])
         return [(model.model, model.name)
-            for model in models
+                for model in models
                 if model.model.startswith('hc.res')]
 
     @api.depends('detail_name')
@@ -434,41 +450,46 @@ class ConditionEvidenceDetail(models.Model):
             if this.detail_name:
                 this.detail_type = this.detail_name._description
 
-    # @api.multi          
-    # def _compute_detail_name(self):         
-    #     for hc_condition_evidence_detail in self:
-    #         hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.   
-    #         if hc_condition_evidence_detail.detail_type == 'string':    
-    #             hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.detail_string
-    #         elif hc_condition_evidence_detail.detail_type == 'code':   
-    #             hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.detail_code_id.name
+                # @api.multi
+                # def _compute_detail_name(self):
+                #     for hc_condition_evidence_detail in self:
+                #         hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.
+                #         if hc_condition_evidence_detail.detail_type == 'string':
+                #             hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.detail_string
+                #         elif hc_condition_evidence_detail.detail_type == 'code':
+                #             hc_condition_evidence_detail.detail_name = hc_condition_evidence_detail.detail_code_id.name
 
-class ConditionNote(models.Model):  
-    _name = "hc.condition.note" 
-    _description = "Condition Note"     
+
+class ConditionNote(models.Model):
+    _name = "hc.condition.note"
+    _description = "Condition Note"
     _inherit = ["hc.basic.association", "hc.annotation"]
 
     condition_id = fields.Many2one(
-        comodel_name="hc.res.condition", 
-        string="Condition", 
-        help="Condition associated with this Condition Note.")              
+        comodel_name="hc.res.condition",
+        string="Condition",
+        help="Condition associated with this Condition Note.")
 
-class ConditionSeverity(models.Model):    
-    _name = "hc.vs.condition.severity"    
-    _description = "Condition Severity"        
-    _inherit = ["hc.value.set.contains"]    
 
-class ConditionEvidenceCode(models.Model):    
-    _name = "hc.vs.condition.evidence.code"    
-    _description = "Condition Evidence Code"        
-    _inherit = ["hc.value.set.contains"]    
-
-class ConditionStage(models.Model):    
-    _name = "hc.vs.condition.stage"    
-    _description = "Condition Stage"        
+class ConditionSeverity(models.Model):
+    _name = "hc.vs.condition.severity"
+    _description = "Condition Severity"
     _inherit = ["hc.value.set.contains"]
 
-class ConditionCategory(models.Model):  
-    _name = "hc.vs.condition.category"  
-    _description = "Condition Category"         
+
+class ConditionEvidenceCode(models.Model):
+    _name = "hc.vs.condition.evidence.code"
+    _description = "Condition Evidence Code"
+    _inherit = ["hc.value.set.contains"]
+
+
+class ConditionStage(models.Model):
+    _name = "hc.vs.condition.stage"
+    _description = "Condition Stage"
+    _inherit = ["hc.value.set.contains"]
+
+
+class ConditionCategory(models.Model):
+    _name = "hc.vs.condition.category"
+    _description = "Condition Category"
     _inherit = ["hc.value.set.contains"]
